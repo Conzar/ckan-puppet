@@ -59,7 +59,7 @@ Note,the following plugins have only been tested .
  * resource_proxy 
  * pdf_preview
 
-## Option Parameters
+## Optional Parameters
 
 The parameters listed in this section can optionally be configured.
 
@@ -91,7 +91,7 @@ Note, this is using dpkg so deb/ubuntu only.
 ### `ckan_package_filename` 
 The filename of the ckan package.
 
-### `custom_css
+### `custom_css`
 The source to a css file used for the ckan site.  This replaces
 the default main.css.  Should be specified as
 
@@ -113,17 +113,17 @@ This section shows example uses of the ckan module.
 ### Example 1
 This example demonstrates the most basic usage of the ckan module.
 
-class { 'ckan':
-  site_url              => 'test.ckan.com',
-  site_title            => 'CKAN Test',
-  site_description      => 'A shared environment for managing Data.',
-  site_intro            => 'A CKAN test installation',
-  site_about            => 'Pilot data catalogue and repository.',
-  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-  is_ckan_from_repo     => 'false',
-  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
-}
+	class { 'ckan':
+	  site_url              => 'test.ckan.com',
+	  site_title            => 'CKAN Test',
+	  site_description      => 'A shared environment for managing Data.',
+	  site_intro            => 'A CKAN test installation',
+	  site_about            => 'Pilot data catalogue and repository.',
+	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+	  is_ckan_from_repo     => 'false',
+	  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
+	  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
+	}
 
 ### Example 2
 This example demonstrates a customize the ckan module.
@@ -131,46 +131,46 @@ This example demonstrates a customize the ckan module.
 
 Declaring a class that manages the configuration files.
 
-class {landcare_ckan::config:
-}
+	class {landcare_ckan::config:
+	}
 
 Declaring the ckan module with the customized parameters.
 
-class { 'ckan':
-  site_url              => 'test.ckan.zen.landcareresearch.co.nz',
-  site_title            => 'Landcare Research Test CKAN Repository',
-  site_description      => 'A shared environment for managing Landcare Research Data.',
-  site_intro            => 'Welcome to the Landcare Research Pilot Data Repository. This is a trial installation of the CKAN software, for us to test ahead of (all going well) a wider company rollout.',
-  site_about            => 'Pilot data catalogue and repository for [Landcare Research] (http://www.landcareresearch.co.nz)',
-  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-  site_logo             => $landcare_ckan::config::logo_src,
-  license               => $landcare_ckan::config::license_src,
-  is_ckan_from_repo     => 'false',
-  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
-  custom_css            => $landcare_ckan::config::css_src,
-  custom_imgs           => $landcare_ckan::config::custom_images_array,
-  require               => Class['landcare_ckan::config'],
-}
+	class { 'ckan':
+	  site_url              => 'test.ckan.zen.landcareresearch.co.nz',
+	  site_title            => 'Landcare Research Test CKAN Repository',
+	  site_description      => 'A shared environment for managing Landcare Research Data.',
+	  site_intro            => 'Welcome to the Landcare Research Pilot Data Repository. This is a trial installation of the CKAN software, for us to test ahead of (all going well) a wider company rollout.',
+	  site_about            => 'Pilot data catalogue and repository for [Landcare Research] (http://www.landcareresearch.co.nz)',
+	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+	  site_logo             => $landcare_ckan::config::logo_src,
+	  license               => $landcare_ckan::config::license_src,
+	  is_ckan_from_repo     => 'false',
+	  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
+	  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
+	  custom_css            => $landcare_ckan::config::css_src,
+	  custom_imgs           => $landcare_ckan::config::custom_images_array,
+	  require               => Class['landcare_ckan::config'],
+	}
 
 Class where the customized configuration files are managed
 
-class landcare_ckan::config {
-  $img_dir = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
+	class landcare_ckan::config {
+	  $img_dir = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
 
-  $landcare_src = 'puppet:///modules/landcare_ckan'
+	  $landcare_src = 'puppet:///modules/landcare_ckan'
 
-  $css_src = "$landcare_src/custom.css"
+	  $css_src = "$landcare_src/custom.css"
 
-  $background_img_src = "$landcare_src/LCR-ckan-homepage-background.jpg"
-  $custom_images_array = [$background_img_src]
+	  $background_img_src = "$landcare_src/LCR-ckan-homepage-background.jpg"
+	  $custom_images_array = [$background_img_src]
 
-  $logo_filename = 'lcr_logo_white_sm.png'
-  $logo_src = "$landcare_src/$logo_filename"
+	  $logo_filename = 'lcr_logo_white_sm.png'
+	  $logo_src = "$landcare_src/$logo_filename"
 
-  $license = 'NZ_licenses_ckan.json'
-  $license_src = "$landcare_src/$license"
-}
+	  $license = 'NZ_licenses_ckan.json'
+	  $license_src = "$landcare_src/$license"
+	}
 
 ## Deploying with Vagrant
 Vagrant can be used to easily deploy the ckan module for testing or production environments.
@@ -181,36 +181,36 @@ The following content should be copied to a clean Vagrantfile.
 Note, make sure to edit puppet.module_path with a path to
 where the ckan module and the ckan module dependencies are located.
 
-# -*- mode: ruby -*-
-# vi: set ft=ruby :
+	# -*- mode: ruby -*-
+	# vi: set ft=ruby :
 
-  Vagrant::Config.run do |config|
-    config.vm.box = "precise64"
-     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-     config.vm.network :hostonly, "192.168.33.10"
-     config.vm.forward_port 80, 8080
-     config.vm.provision :puppet do |puppet|
-       puppet.module_path = "/<path to modules>/modules/"
-       puppet.manifests_path = "manifests"
-       puppet.manifest_file  = "test-ckan.pp"
-     end
-  end
+	  Vagrant::Config.run do |config|
+	    config.vm.box = "precise64"
+	     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+	     config.vm.network :hostonly, "192.168.33.10"
+	     config.vm.forward_port 80, 8080
+	     config.vm.provision :puppet do |puppet|
+	       puppet.module_path = "/<path to modules>/modules/"
+	       puppet.manifests_path = "manifests"
+	       puppet.manifest_file  = "test-ckan.pp"
+	     end
+	  end
 
 ### test-ckan.pp
 This is the file that contains the declaration of the ckan module.
 The file test-ckan.pp should be created in project_home/manifests.
 
-  class { 'ckan':
-    site_url              => 'test.ckan.com',
-    site_title            => 'CKAN Test',
-    site_description      => 'A shared environment for managing Data.',
-    site_intro            => 'A CKAN test installation',
-    site_about            => 'Pilot data catalogue and repository.',
-    plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-    is_ckan_from_repo     => 'false',
-    ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-    ckan_package_filename => 'python-ckan_2.1_amd64.deb',
-  }
+	  class { 'ckan':
+	    site_url              => 'test.ckan.com',
+	    site_title            => 'CKAN Test',
+	    site_description      => 'A shared environment for managing Data.',
+	    site_intro            => 'A CKAN test installation',
+	    site_about            => 'Pilot data catalogue and repository.',
+	    plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+	    is_ckan_from_repo     => 'false',
+	    ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
+	    ckan_package_filename => 'python-ckan_2.1_amd64.deb',
+	  }
 
 ### Usage
 In the project directory (vagrant directory),
