@@ -1,0 +1,44 @@
+{
+  "version": "1.0.0",
+  "summary": "Deploys CKAN",
+  "project_page": "http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/master/modules/ckan",
+  "checksums": {
+    "files/jetty": "a709ffda8f449ed5f9ac456892d8210f",
+    "manifests/repos.pp": "009a7e34711a6791da87e6cc3b140fde",
+    "README.md": "ba0868a50c23132b553b266242c3b581",
+    "manifests/service.pp": "f840d79c542e7fbf6586943517f9e033",
+    "manifests/db_config.pp": "b7bdeb5e11bae29bb810a64c3ba67f2e",
+    "manifests/ckanext/spatial.pp": "56262c6baac64ed63a6b381817642623",
+    "manifests/install.pp": "f8d1d1c0fefa3a2822f3f4cc4818b2cf",
+    "templates/production.erb": "402f2bc76f87dd8ec02182368d439609",
+    "templates/custom.erb": "cd40477ce1302d264a25b39829da6b53",
+    "files/ckan_backup.bash": "2f861d983f350dea34af581728eac83e",
+    "manifests/config.pp": "cca894a5112c5efce599c28cb2801680",
+    "tests/init.pp": "778a55d49565126784b7ca8c66b1d1e3",
+    "manifests/init.pp": "2a0e9a8053841ea028bade54d2dfdd45",
+    "Modulefile": "fc74073a6013f097c6f51735d01479cf",
+    "manifests/custom_images.pp": "c1265805ef048a8d131281148950c70f"
+  },
+  "name": "conzar-ckan",
+  "source": "UNKNOWN",
+  "author": "Michael Speth",
+  "dependencies": [
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": ">=0.6.0"
+    },
+    {
+      "name": "puppetlabs/postgresqldb",
+      "version_requirement": ">=3.2.0"
+    },
+    {
+      "name": "conzar/reset_apt",
+      "version_requirement": ">=1.0.0"
+    }
+  ],
+  "description": "Deploys CKAN the open source data portal.\n\t     This module provides customization such as adding a logo and customized css.",
+  "license": "GPLv3",
+  "types": [
+
+  ]
+}

@@ -1,0 +1,11 @@
+name 'conzar-ckan'
+version '1.0.0'
+author 'Michael Speth'
+summary 'Deploys CKAN'
+description 'Deploys CKAN the open source data portal.
+	     This module provides customization such as adding a logo and customized css.'
+project_page 'http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/master/modules/ckan'
+license 'GPLv3'
+dependency 'puppetlabs/apache', '>=0.6.0'
+dependency 'puppetlabs/postgresqldb', '>=3.2.0'
+dependency 'conzar/reset_apt', '>=1.0.0'
