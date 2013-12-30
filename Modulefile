@@ -8,5 +8,5 @@ project_page 'http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/maste
 source 'git@github.com:Conzar/ckan-puppet.git'
 license 'GPLv3'
 dependency 'puppetlabs/apache', '>=0.6.0'
-dependency 'puppetlabs/postgresqldb', '>=3.2.0'
+dependency 'puppetlabs/postgresql', '>=3.2.0'
 dependency 'conzar/reset_apt', '>=1.0.0'
