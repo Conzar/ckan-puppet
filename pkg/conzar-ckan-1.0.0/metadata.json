@@ -1,27 +1,27 @@
 {
   "version": "1.0.0",
-  "summary": "Deploys CKAN",
-  "project_page": "http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/master/modules/ckan",
   "checksums": {
-    "files/jetty": "a709ffda8f449ed5f9ac456892d8210f",
-    "manifests/repos.pp": "009a7e34711a6791da87e6cc3b140fde",
-    "README.md": "ba0868a50c23132b553b266242c3b581",
-    "manifests/service.pp": "f840d79c542e7fbf6586943517f9e033",
-    "manifests/db_config.pp": "b7bdeb5e11bae29bb810a64c3ba67f2e",
-    "manifests/ckanext/spatial.pp": "56262c6baac64ed63a6b381817642623",
-    "manifests/install.pp": "f8d1d1c0fefa3a2822f3f4cc4818b2cf",
-    "templates/production.erb": "402f2bc76f87dd8ec02182368d439609",
-    "templates/custom.erb": "cd40477ce1302d264a25b39829da6b53",
-    "files/ckan_backup.bash": "2f861d983f350dea34af581728eac83e",
+    "art/logo.xcf": "bb0a09192fe5295a7eaf1909e35dc128",
     "manifests/config.pp": "cca894a5112c5efce599c28cb2801680",
-    "tests/init.pp": "778a55d49565126784b7ca8c66b1d1e3",
+    "templates/production.erb": "402f2bc76f87dd8ec02182368d439609",
+    "manifests/custom_images.pp": "c1265805ef048a8d131281148950c70f",
+    "manifests/service.pp": "f840d79c542e7fbf6586943517f9e033",
+    "manifests/install.pp": "f8d1d1c0fefa3a2822f3f4cc4818b2cf",
+    "templates/custom.erb": "cd40477ce1302d264a25b39829da6b53",
+    "art/logo.png": "99e9aee17d47b40feb137c094dda3e56",
+    "LICENSE": "d32239bcb673463ab874e80d47fae504",
+    "README.md": "fb822ce3460c6324c241d1a288dbcca9",
+    "manifests/repos.pp": "009a7e34711a6791da87e6cc3b140fde",
+    "manifests/ckanext/spatial.pp": "56262c6baac64ed63a6b381817642623",
     "manifests/init.pp": "2a0e9a8053841ea028bade54d2dfdd45",
-    "Modulefile": "fc74073a6013f097c6f51735d01479cf",
-    "manifests/custom_images.pp": "c1265805ef048a8d131281148950c70f"
+    "files/jetty": "a709ffda8f449ed5f9ac456892d8210f",
+    "CHANGELOG": "749d89bf09e5019c4947b6388274a1fd",
+    "manifests/db_config.pp": "b7bdeb5e11bae29bb810a64c3ba67f2e",
+    "Modulefile": "5ce19cfeea3c4b59e9e05f711b52e05a",
+    "tests/init.pp": "778a55d49565126784b7ca8c66b1d1e3",
+    "files/ckan_backup.bash": "2f861d983f350dea34af581728eac83e"
   },
-  "name": "conzar-ckan",
-  "source": "UNKNOWN",
-  "author": "Michael Speth",
+  "summary": "Deploys CKAN",
   "dependencies": [
     {
       "name": "puppetlabs/apache",
@@ -36,8 +36,12 @@
       "version_requirement": ">=1.0.0"
     }
   ],
-  "description": "Deploys CKAN the open source data portal.\n\t     This module provides customization such as adding a logo and customized css.",
+  "author": "Michael Speth",
   "license": "GPLv3",
+  "description": "Deploys CKAN the open source data portal.\n\t     This module provides customization such as adding a logo and customized css.",
+  "source": "git@github.com:Conzar/ckan-puppet.git",
+  "name": "conzar-ckan",
+  "project_page": "http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/master/modules/ckan",
   "types": [
 
   ]
