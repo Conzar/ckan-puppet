@@ -42,10 +42,10 @@ class ckan::install {
   # === utility packages ===
   # need the latest version of nodejs in order to use
   # the ckan script bin/less
-  #include 'apt'
-  package { ['nodejs'] :
-    ensure  => present,
-  }
+#  package { ['nodejs'] :
+#    ensure  => present,
+#  }
+  include nodejs
 
   # used to make an api request.
   package { 'python-pip' :

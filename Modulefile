@@ -1,5 +1,5 @@
 name 'conzar-ckan'
-version '1.0.0'
+version '1.0.1'
 author 'Michael Speth'
 summary 'Deploys CKAN'
 description 'Deploys CKAN the open source data portal.
@@ -11,3 +11,4 @@ dependency 'puppetlabs/apache', '>=0.6.0'
 dependency 'puppetlabs/postgresql', '>=3.2.0'
 dependency 'conzar/reset_apt', '>=1.0.0'
 dependency 'maestrodev/wget', '>=1.3.0'
+dependency 'puppetlabs/nodejs', '>=0.4.0'

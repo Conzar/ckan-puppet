@@ -15,7 +15,7 @@
 # [*site_about*] Information on the about page.
 # [*plugins*] Contains the ckan plugins to be used by the installation.
 # [*site_logo*] The source of the logo.  Should be spedified as
-#               puppet:///<your module>/<image>.png 
+#               puppet:///<your module>/<image>.png
 #               Note, should be a png file.
 # [*license*] the source to the json license file.  Should be specified as
 #             puppet:///<your module>/<license file> and maintained by your module
@@ -33,8 +33,12 @@
 #                puppet:///<your module>/<css filename> and maintained by your module.
 #                Note, images used in the custom css should be set in custom_imgs.
 # [*custom_imgs*] An array of source for the images to be used by the css.
-#                 Should be specified as 
+#                 Should be specified as
 #                 ['puppet:///<your module>/<img1>','...']
+# [*do_reset_apt*] True if the apt repository should be reset and cleaned and false to leave the
+#                  apt repository unmodified.  Note, if having dependency cycle problems with
+#                  apt, set this to false.  If using vagrant, its recomended to set this to
+#                  true.
 #
 # === Examples
 #
@@ -71,26 +75,34 @@ class ckan (
   $ckan_package_filename = '',
   $custom_css = 'main.css',
   $custom_imgs = '',
+  $do_reset_apt = 'true',
 ){
   $ckan_package_dir = '/usr/local/ckan'
 
+  # == stages == #
   stage {'va_first':
     before => Stage['first'],
   }
-
-  class { 'reset_apt':
-    stage => va_first,
-  }
-
   stage {'first':
     before => Stage['main'],
   }
-  class { ckan::repos:
-    stage   => first,
-    require => Class['reset_apt'],
+
+  # == va_first == #
+  if $do_reset_apt == 'true' {
+    class { 'reset_apt':
+      stage => va_first,
+    }
   }
-  class { ckan::install:
-    require => Class['ckan::repos'],
+
+  # == first == #
+  class { 'ckan::repos':
+    stage   => first,
+  }
+
+  # == main stage ==
+
+  class { 'ckan::install':
+    #require => Class['ckan::repos'],
   }
   class { 'ckan::db_config':
     require => Class['ckan::install'],
