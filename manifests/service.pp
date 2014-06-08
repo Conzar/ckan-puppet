@@ -16,15 +16,29 @@ class ckan::service {
   }
 
   # === postgresql ===
+  include check_run
   # initialize the database with ckan
-  exec {'init_db':
-    command  => 'ckan db init',
-    path     => '/usr/bin',
+#  exec {'init_db':
+#    command  => 'ckan db init',
+#    path     => '/usr/bin',
+#    require  => Service['jetty'],
+#    #require => [Postgresql::Server::Db['ckan_default'],
+#    #Service['jetty']],
+#    returns => [0,1,2],
+#  }
+
+  include check_run
+  # initialize db
+  check_run::task { 'init_db':
+    exec_command  => '/usr/bin/ckan db init',
     require  => Service['jetty'],
-    #require => [Postgresql::Server::Db['ckan_default'],
-    #Service['jetty']],
-    returns => [0,1,2],
+  } ->
+  # setup permissions on the database
+  check_run::task { 'set_database_perms':
+    exec_command => '/usr/bin/python /usr/lib/ckan/default/src/ckan/ckanext/datastore/bin/datastore_setup.py ckan_default datastore_default ckan_default ckan_default datastore_default -p postgres',
+    require => Check_run::Task['init_db'],
   }
+
   # only used when upgrading package to ensure a fresh backup
 #  exec {'ckan_backup_oneoff':
 #    command => '/usr/local/bin/ckan_backup.bash',

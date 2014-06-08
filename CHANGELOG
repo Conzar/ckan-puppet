@@ -1,3 +1,15 @@
+2014-02-??
+Version 1.0.2
+=============
+
+Summary:
+
+Minor bug fixes and supports CKAN 2.2 package version
+
+Features:
+- Fixed a bug if the license was left off, caused errors in datastore
+- Added support for CKAN 2.2 package
+
 2014-01-15 
 
 Version 1.0.1
@@ -8,7 +20,7 @@ Summary:
 Minor bug fix when deploying outside of a Vagrant environment
 
 Features:
-- Added a paramter to disable the apt reset
+- Added a parameter to disable the apt reset
 
 Fixes:
 - Removed puppetlabs-apt and apt::ppa which was causing dependency loops if a class outside of ckan required apt::ppa

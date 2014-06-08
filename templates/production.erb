@@ -44,11 +44,14 @@ who.log_file = %(cache_dir)s/who_log.ini
 ## Database Settings
 
 sqlalchemy.url = postgresql://ckan_default:pass@localhost/ckan_default
-#sqlalchemy.url = sqlite:///
-#sqlalchemy.url = sqlite:///%(here)s/somedb.db
 
+## DataStore Extension
 ckan.datastore.write_url = postgresql://ckan_default:pass@localhost/datastore_default
 ckan.datastore.read_url = postgresql://datastore_default:pass@localhost/datastore_default
+
+## Data pusher
+ckan.datapusher.url = http://0.0.0.0:8800
+ckan.datapusher.formats = <%= scope.lookupvar('ckan::datapusher_formats') %>
 
 ## Site Settings
 
@@ -70,9 +73,8 @@ ckan.auth.create_user_via_api = false
 
 ckan.site_id = default
 solr_url = http://127.0.0.1:8983/solr
-
-#ckan.simple_search = 1
-
+# instruct ckan to use Solr
+ckan.simple_search = false
 
 ## Plugins Settings
 
@@ -107,10 +109,12 @@ ckan.preview.loadable = html htm rdf+xml owl+xml xml n3 n-triples turtle plain a
 # package_hide_extras = for_search_index_only
 #package_edit_return_url = http://another.frontend/dataset/<NAME>
 #package_new_return_url = http://another.frontend/dataset/<NAME>
-#ckan.recaptcha.publickey =
-#ckan.recaptcha.privatekey =
-<% if @license_file != "" %>
-licenses_group_url = file://<%= @ckan_default %>/<%= @license_file %>
+<% if scope.lookupvar('ckan::recaptcha_publickey') != '' && scope.lookupvar('ckan::recaptcha_privatekey') != '' -%>
+ckan.recaptcha.publickey = <%= scope.lookupvar('ckan::recaptcha_publickey') %>
+ckan.recaptcha.privatekey = <%= scope.lookupvar('ckan::recaptcha_privatekey') %>
+<% end -%>
+<% if scope.lookupvar('ckan::license') != "" %>
+licenses_group_url = file://<%= scope.lookupvar('ckan::config::ckan_default') %>/<%= scope.lookupvar('ckan::config::license_file') %>
 <% else %>
 licenses_group_url = http://licenses.opendefinition.org/licenses/groups/ckan.json
 <% end %>
@@ -134,8 +138,13 @@ ckan.feeds.author_link =
 ## Storage Settings
 
 # Local file storage:
+### deprecated in 2.2
+### but must be used if upgrading from 2.1 to 2.2
 ofs.impl = pairtree
-ofs.storage_dir = /var/lib/ckan/default
+ofs.storage_dir = <%= scope.lookupvar('ckan::config::ckan_storage_path') %>
+## 2.2 config
+ckan.storage_path = <%= scope.lookupvar('ckan::config::ckan_storage_path') %>
+ckan.max_resource_size = <%= scope.lookupvar('ckan::max_resource_size') %>
 
 # Google cloud storage:
 #ofs.impl = google

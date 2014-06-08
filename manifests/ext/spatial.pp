@@ -1,5 +1,5 @@
 # installs the ckanext-spatial extension
-class ckan::ckanext::spatial {
+class ckan::ext::spatial {
   $sql_functions = '/usr/share/postgresql/9.1/contrib/postgis-2.0/postgis.sql'
   $sql_tables = '/usr/share/postgresql/9.1/contrib/postgis-2.0/spatial_ref_sys.sql'
   include apt

@@ -110,6 +110,12 @@ Should be specified as
 Set this parameter to true if the apt repository should be reset and cleaned.  This is necessary
 if deploying with Vagrant.
 
+## Manual Configuration
+
+A systems admin account is still required to be created manually.  If using Ubuntu, use the following command:
+
+sudo ckan sysadmin add <username>
+
 ## Usage
 
 This section shows example uses of the ckan module.

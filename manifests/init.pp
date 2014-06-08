@@ -39,6 +39,18 @@
 #                  apt repository unmodified.  Note, if having dependency cycle problems with
 #                  apt, set this to false.  If using vagrant, its recomended to set this to
 #                  true.
+# [*serveradmin*] The admin's email address used in the apache configuration.
+# [*recaptcha_publickey*] The public key for recaptcha (by default not set).
+# [*recaptcha_privatekey*] The private key for recaptcha (by default not set).
+# [*max_resource_size*] The maximum in megabytes a resource upload can be.
+# [*datapusher_formats*] File formats that will be pushed to the DataStore by the DataPusher.  
+#  When adding or editing a resource which links to a file in one of these formats, the DataPusher
+#  will automatically try to import its contents to the DataStore.
+# [*apache_headers*] Sets the apache headers so to control search engine crawls and etc.
+# [*postgres_pass*] The password for the postgres user of the database (admin user).
+# [*pg_hba_conf_defaults*] True if use the default hbas and false to configure your own.
+#  This module uses postgresql so this setting informs the postgresql module
+#  that the hba's should be handled outside of this module.  Requires your own hba configuration.
 #
 # === Examples
 #
@@ -70,12 +82,20 @@ class ckan (
   $plugins,
   $site_logo = '',
   $license = '',
-  $is_ckan_from_repo = 'true',
+  $is_ckan_from_repo = true,
   $ckan_package_url = '',
   $ckan_package_filename = '',
   $custom_css = 'main.css',
   $custom_imgs = '',
-  $do_reset_apt = 'true',
+  $do_reset_apt = true,
+  $serveradmin = 'webmaster@localhost',
+  $recaptcha_publickey = '',
+  $recaptcha_privatekey = '',
+  $max_resource_size = 100,
+  $datapusher_formats = 'csv xls application/csv application/vnd.ms-excel',
+  $apache_headers = undef,
+  $postgres_pass = pass,
+  $pg_hba_conf_defaults = true,
 ){
   $ckan_package_dir = '/usr/local/ckan'
 
@@ -88,7 +108,7 @@ class ckan (
   }
 
   # == va_first == #
-  if $do_reset_apt == 'true' {
+  if $do_reset_apt == true {
     class { 'reset_apt':
       stage => va_first,
     }
@@ -101,9 +121,7 @@ class ckan (
 
   # == main stage ==
 
-  class { 'ckan::install':
-    #require => Class['ckan::repos'],
-  }
+  class { 'ckan::install': }
   class { 'ckan::db_config':
     require => Class['ckan::install'],
   }
@@ -117,7 +135,7 @@ class ckan (
     plugins          => $ckan::plugins,
     require          => Class['ckan::db_config'],
   }
-  class { 'Ckan::Service' :
+  class { 'ckan::Service' :
     require => Class['ckan::config'],
   }
 }

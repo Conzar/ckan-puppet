@@ -14,19 +14,23 @@ class ckan::config (
   # the configuration directories
   $ckan_etc       = '/etc/ckan'
   $ckan_default   = "$ckan_etc/default"
+  $ckan_src       = '/usr/lib/ckan/default/src/ckan'
   # the default image directory
-  $ckan_img_dir   = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
-  $ckan_css_dir   = '/usr/lib/ckan/default/src/ckan/ckan/public/base/css'
+  $ckan_img_dir   = "$ckan_src/ckan/public/base/images"
+  $ckan_css_dir   = "$ckan_src/ckan/public/base/css"
+  $ckan_storage_path = '/var/lib/ckan/default'
   $license_file   = 'license.json'
   $backup_dir = '/backup'
 
   # ckan specific configuration files
-  file {'/etc/apache2/sites-enabled/ckan_default':
-    ensure  => present,
-  }
-  file {'/etc/apache2/sites-enabled/25-ckan.zen.landcareresearch.co.nz.conf':
-    ensure  => present,
-  }
+#  file {'/etc/apache2/sites-enabled/ckan_default':
+#    ensure  => present,
+#  }
+#  file {'/etc/apache2/sites-enabled/25-ckan.zen.landcareresearch.co.nz.conf':
+#    ensure  => present,
+#  }
+
+
 
   # === Jeta configuration ===
   file {'/etc/default/jetty':
@@ -36,7 +40,7 @@ class ckan::config (
   # change default schema to use CKAN schema
   file {'/etc/solr/conf/schema.xml':
     ensure  => link,
-    target  => '/usr/lib/ckan/default/src/ckan/ckan/config/solr/schema-2.0.xml',
+    target  => "$ckan_src/ckan/config/solr/schema-2.0.xml",
   }
 
   file {[$ckan_etc,$ckan_default]:
@@ -69,7 +73,7 @@ class ckan::config (
       notify  => Exec['reload_apache'],
     }
   }
-  $ckan_data_dir = ['/var/lib/ckan','/var/lib/ckan/default']
+  $ckan_data_dir = ['/var/lib/ckan',$ckan_storage_path]
   file {$ckan_data_dir:
     ensure => directory,
     owner  => www-data,
@@ -178,5 +182,9 @@ class ckan::config (
   # cd /usr/lib/ckan/default/src/ckan
   # /usr/lib/ckan/default/src/ckan$ paster sysadmin add mcglinchya -c /etc/ckan/default/production.ini
   # update the log
+  
+  # for upgrading between version
+  # /usr/lib/ckan/default/bin/paster --plugin=ckan db upgrade -c /etc/ckan/default/production.ini
+  
 
 }
