@@ -110,6 +110,32 @@ Should be specified as
 Set this parameter to true if the apt repository should be reset and cleaned.  This is necessary
 if deploying with Vagrant.
 
+### `recaptcha_publickey` 
+The public key for recaptcha (by default not set).
+
+### `recaptcha_privatekey`
+The private key for recaptcha (by default not set).
+
+### `max_resource_size` 
+The maximum in megabytes a resource upload can be.
+
+### `datapusher_formats` 
+File formats that will be pushed to the DataStore by the DataPusher.  
+When adding or editing a resource which links to a file in one of these formats, the DataPusher
+will automatically try to import its contents to the DataStore.
+
+### `apache_headers` 
+Sets the apache headers so to control search engine crawls and etc.
+
+### `postgres_pass` 
+The password for the postgres user of the database (admin user).
+
+### `pg_hba_conf_defaults` 
+True if use the default hbas and false to configure your own.
+This module uses puppetlabs/postgresql so this setting informs the postgresql module
+that the hba's should be handled outside of this module.  Requires your own hba configuration.
+
+
 ## Manual Configuration
 
 A systems admin account is still required to be created manually.  If using Ubuntu, use the following command:
