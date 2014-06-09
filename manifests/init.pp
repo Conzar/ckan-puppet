@@ -97,6 +97,12 @@ class ckan (
   $postgres_pass = pass,
   $pg_hba_conf_defaults = true,
 ){
+  # Check supported operating systems
+  if $osfamily != 'debian' {
+    fail("Unsupported OS $osfamily.  Please use a debian based system") 
+  }
+  
+  # == Variables == #
   $ckan_package_dir = '/usr/local/ckan'
 
   # == stages == #
