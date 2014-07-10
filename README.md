@@ -124,6 +124,17 @@ File formats that will be pushed to the DataStore by the DataPusher.
 When adding or editing a resource which links to a file in one of these formats, the DataPusher
 will automatically try to import its contents to the DataStore.
 
+### `preview_loadable`
+Defines the resource formats which should be loaded directly in an iframe tag when previewing 
+them if no Data Viewer can preview it. 
+
+Defaults to 'html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv tsv rss txt json'
+
+### `text_formats` 
+Formats used for the text preview
+
+Defaults to not being set in the configuration (since its an empty string)
+
 ### `apache_headers` 
 Sets the apache headers so to control search engine crawls and etc.
 

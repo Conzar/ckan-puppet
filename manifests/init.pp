@@ -44,8 +44,11 @@
 # [*recaptcha_privatekey*] The private key for recaptcha (by default not set).
 # [*max_resource_size*] The maximum in megabytes a resource upload can be.
 # [*datapusher_formats*] File formats that will be pushed to the DataStore by the DataPusher.  
-#  When adding or editing a resource which links to a file in one of these formats, the DataPusher
-#  will automatically try to import its contents to the DataStore.
+#                        When adding or editing a resource which links to a file in one of these formats, the DataPusher
+#                        will automatically try to import its contents to the DataStore.
+# [*preview_loadable*] Defines the resource formats which should be loaded directly in an iframe tag when previewing 
+#                      them if no Data Viewer can preview it. 
+# [*text_formats*] Formats used for the text preview
 # [*apache_headers*] Sets the apache headers so to control search engine crawls and etc.
 # [*postgres_pass*] The password for the postgres user of the database (admin user).
 # [*pg_hba_conf_defaults*] True if use the default hbas and false to configure your own.
@@ -93,6 +96,8 @@ class ckan (
   $recaptcha_privatekey = '',
   $max_resource_size = 100,
   $datapusher_formats = 'csv xls application/csv application/vnd.ms-excel',
+  $preview_loadable = 'html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv tsv rss txt json',
+  $text_formats = '',
   $apache_headers = undef,
   $postgres_pass = pass,
   $pg_hba_conf_defaults = true,
@@ -141,7 +146,7 @@ class ckan (
     plugins          => $ckan::plugins,
     require          => Class['ckan::db_config'],
   }
-  class { 'ckan::Service' :
+  class { 'ckan::service' :
     require => Class['ckan::config'],
   }
 }
