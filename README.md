@@ -19,12 +19,19 @@ The module can be obtained from the [Puppet Forge](http://forge.puppetlabs.com/c
 `puppet-module install conzar/ckan`
 
 ## Requirements
-Note, the puppet packages below should automatically be installed if the puppet module command is used.
+In order to get all of the dependencies do the following:
+
+ * puppet module install conzar-ckan
+
+Update to apache from github
+
+ * delete apache puppet module in the puppet modules directory
+ * download apache from git: `git clone git@github.com:Conzar/puppetlabs-apache.git`
+ * rename puppetlabs-apache to apache
+ 
+Other Requirements
 
  * Ubuntu Operating System.
- * Puppetlabs/apache module.  Can be obtained here: http://forge.puppetlabs.com/puppetlabs/apache or with the command `puppet module install puppetlabs/apache`
- * Puppetlabs/postgresqldb module.  Can be obtained here: http://forge.puppetlabs.com/puppetlabs/postgresqldb or with the command `puppet module install puppetlabs/postgresqldb`
- * Conzar/reset_apt module.  Can be obtained here: http://forge.puppetlabs.com/conzar/reset_apt or with the command `puppet module install conzar/reset_apt`
 
 ## Configuration
 
@@ -68,13 +75,13 @@ The parameters listed in this section can optionally be configured.
 The source of the logo.  The logo format requires a png file.
 
 Should be spedified as
-puppet:///<your module>/<image>.png 
+`puppet:///<your module>/<image>.png`
 
 ### `license` 
 The source to the license file.  The license format requies a json file.
 Should be specified as
 
-puppet:///<your module>/<license file> and maintained by your module
+`puppet:///<your module>/<license file>` and maintained by your module
 
 ### `is_ckan_from_repo` 
 A boolean to indicate if the ckan package should be
@@ -95,7 +102,7 @@ The filename of the ckan package.
 The source to a css file used for the ckan site.  This replaces
 the default main.css.  Should be specified as
 
-puppet:///<your module>/<css filename> and maintained by your module.
+`puppet:///<your module>/<css filename>` and maintained by your module.
 
 Note, images used in the custom css should be set in custom_imgs.
 
@@ -104,7 +111,7 @@ An array of source for the images to be used by the css.
 Only required if the custom_css uses new images.
 
 Should be specified as 
-[ 'puppet:///<your module>/<img1>' , 'puppet:///<your module>/<img2>' , ... ]
+`[ 'puppet:///<your module>/<img1>' , 'puppet:///<your module>/<img2>' , ... ]`
 
 ### `recaptcha_publickey` 
 The public key for recaptcha (by default not set).
@@ -249,17 +256,18 @@ where the ckan module and the ckan module dependencies are located.
 This is the file that contains the declaration of the ckan module.
 The file test-ckan.pp should be created in project_home/manifests/.
 
-	  class { 'ckan':
-	    site_url              => 'test.ckan.com',
-	    site_title            => 'CKAN Test',
-	    site_description      => 'A shared environment for managing Data.',
-	    site_intro            => 'A CKAN test installation',
-	    site_about            => 'Pilot data catalogue and repository.',
-	    plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-	    is_ckan_from_repo     => 'false',
-	    ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-	    ckan_package_filename => 'python-ckan_2.1_amd64.deb',
-	  }
+          class { 'ckan':
+            site_url              => 'http://192.168.33.10',
+            site_title            => 'CKAN Test',
+            site_description      => 'A shared environment for managing Data.',
+            site_intro            => 'A CKAN test installation',
+            site_about            => 'Pilot data catalogue and repository.',
+	  		plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+            is_ckan_from_repo     => false,
+            ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+            ckan_package_filename => 'python-ckan_2.2_amd64.deb',
+            pg_hba_conf_defaults  => true,
+          }
 
 ### upgrade-puppet.sh
 This file manages installing the latest puppet from puppetlabs and updates apt-get
