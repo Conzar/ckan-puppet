@@ -9,6 +9,7 @@ Updated Dependencies
 Features:
  - Removed the reset_apt module as vagrant can handle updating puppet with a recomended script
  - Updated to the latest apache module which has the necessary changes integrated
+ - Changed default value of the apache headers variable
  
 2014-06-09
 Version 1.0.3
