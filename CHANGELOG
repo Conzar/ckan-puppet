@@ -1,4 +1,33 @@
-2014-02-??
+2014-07-23
+Version 1.0.4
+=============
+
+Summary:
+
+Updated Dependencies
+
+Features:
+ - Removed the reset_apt module as vagrant can handle updating puppet with a recomended script
+ - Updated to the latest apache module which has the necessary changes integrated
+ 
+2014-06-09
+Version 1.0.3
+=============
+
+Summary:
+
+Features:
+ - Added dependancy for Debian/Ubuntu based systems only
+ - Updated readme with new installation parameters
+ - Added Server admin's email specified
+ - Added recaptcha support
+ - Added max_resource_size parameter
+ - Added data pusher formats
+ - Added apache head configuration (in order to control search engine crawlers) and is optional
+ - Added the postgres password as a parameter
+ - Added postgres hba configuration to pass in as a parameter
+
+2014-06-08
 Version 1.0.2
 =============
 

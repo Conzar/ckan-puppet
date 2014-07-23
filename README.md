@@ -104,11 +104,7 @@ An array of source for the images to be used by the css.
 Only required if the custom_css uses new images.
 
 Should be specified as 
-['puppet:///<your module>/<img1>','puppet:///<your module>/<img2>',...]
-
-### `do_reset_apt`
-Set this parameter to true if the apt repository should be reset and cleaned.  This is necessary
-if deploying with Vagrant.
+[ 'puppet:///<your module>/<img1>' , 'puppet:///<your module>/<img2>' , ... ]
 
 ### `recaptcha_publickey` 
 The public key for recaptcha (by default not set).
@@ -168,8 +164,8 @@ This example demonstrates the most basic usage of the ckan module.
 	  site_about            => 'Pilot data catalogue and repository.',
 	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
 	  is_ckan_from_repo     => 'false',
-	  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-	  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
+      ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+      ckan_package_filename => 'python-ckan_2.2_amd64.deb',
 	}
 
 ### Example 2
@@ -193,8 +189,8 @@ Declaring the ckan module with the customized parameters.
 	  site_logo             => $landcare_ckan::config::logo_src,
 	  license               => $landcare_ckan::config::license_src,
 	  is_ckan_from_repo     => 'false',
-	  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
-	  ckan_package_filename => 'python-ckan_2.1_amd64.deb',
+      ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+      ckan_package_filename => 'python-ckan_2.2_amd64.deb',
 	  custom_css            => $landcare_ckan::config::css_src,
 	  custom_imgs           => $landcare_ckan::config::custom_images_array,
 	  require               => Class['landcare_ckan::config'],
@@ -228,24 +224,30 @@ The following content should be copied to a clean Vagrantfile.
 Note, make sure to edit puppet.module_path with a path to
 where the ckan module and the ckan module dependencies are located.
 
-	# -*- mode: ruby -*-
-	# vi: set ft=ruby :
+        # -*- mode: ruby -*-
+        # vi: set ft=ruby :
+        Vagrant.configure("2") do |config|
+          config.vm.box = "precise64"
+          config.vm.box = "ubuntu/precise64"
 
-	  Vagrant::Config.run do |config|
-	    config.vm.box = "precise64"
-	     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-	     config.vm.network :hostonly, "192.168.33.10"
-	     config.vm.forward_port 80, 8080
-	     config.vm.provision :puppet do |puppet|
-	       puppet.module_path = "/<path to modules>/modules/"
-	       puppet.manifests_path = "manifests"
-	       puppet.manifest_file  = "test-ckan.pp"
-	     end
-	  end
+          config.vm.network "private_network", ip: "192.168.33.10"
+          config.vm.provider "virtualbox" do |v| 
+            v.memory = 2048
+            v.cpus = 1 
+          end 
+
+          config.vm.provision :shell, :path => "upgrade-puppet.sh"
+
+          config.vm.provision "puppet" do |puppet|
+            puppet.module_path = "</path to modules>/modules/"
+            puppet.manifests_path = "manifests"
+            puppet.manifest_file  = "test-ckan.pp"
+          end 
+        end
 
 ### test-ckan.pp
 This is the file that contains the declaration of the ckan module.
-The file test-ckan.pp should be created in project_home/manifests.
+The file test-ckan.pp should be created in project_home/manifests/.
 
 	  class { 'ckan':
 	    site_url              => 'test.ckan.com',
@@ -258,6 +260,28 @@ The file test-ckan.pp should be created in project_home/manifests.
 	    ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.1_amd64.deb',
 	    ckan_package_filename => 'python-ckan_2.1_amd64.deb',
 	  }
+
+### upgrade-puppet.sh
+This file manages installing the latest puppet from puppetlabs and updates apt-get
+The file upgrade-puppet.sh should be created in project_home/ (same directory as the Vagrantfile).
+
+        #!/bin/bash
+
+        DISTRIB_CODENAME=$(lsb_release --codename --short)
+        DEB="puppetlabs-release-${DISTRIB_CODENAME}.deb"
+        DEB_PROVIDES="/etc/apt/sources.list.d/puppetlabs.list" # Assume that this file's existence means we have the Puppet Labs repo added
+
+        if [ ! -e $DEB_PROVIDES ]
+        then
+            apt-get install --yes lsb-release
+            # Print statement useful for debugging, but automated runs of this will interpret any output as an error
+            # print "Could not find $DEB_PROVIDES - fetching and installing $DEB"
+            wget -q http://apt.puppetlabs.com/$DEB
+            sudo dpkg -i $DEB
+
+            sudo apt-get update
+            sudo apt-get install --yes puppet
+        fi
 
 ### Usage
 In the project directory (vagrant directory),

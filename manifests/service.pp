@@ -27,7 +27,6 @@ class ckan::service {
 #    returns => [0,1,2],
 #  }
 
-  include check_run
   # initialize db
   check_run::task { 'init_db':
     exec_command  => '/usr/bin/ckan db init',

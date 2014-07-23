@@ -35,10 +35,6 @@
 # [*custom_imgs*] An array of source for the images to be used by the css.
 #                 Should be specified as
 #                 ['puppet:///<your module>/<img1>','...']
-# [*do_reset_apt*] True if the apt repository should be reset and cleaned and false to leave the
-#                  apt repository unmodified.  Note, if having dependency cycle problems with
-#                  apt, set this to false.  If using vagrant, its recomended to set this to
-#                  true.
 # [*serveradmin*] The admin's email address used in the apache configuration.
 # [*recaptcha_publickey*] The public key for recaptcha (by default not set).
 # [*recaptcha_privatekey*] The private key for recaptcha (by default not set).
@@ -107,22 +103,17 @@ class ckan (
     fail("Unsupported OS $osfamily.  Please use a debian based system") 
   }
   
+  File {
+    owner => root,
+    group => root,
+  }
+  
   # == Variables == #
   $ckan_package_dir = '/usr/local/ckan'
 
   # == stages == #
-  stage {'va_first':
-    before => Stage['first'],
-  }
   stage {'first':
     before => Stage['main'],
-  }
-
-  # == va_first == #
-  if $do_reset_apt == true {
-    class { 'reset_apt':
-      stage => va_first,
-    }
   }
 
   # == first == #
