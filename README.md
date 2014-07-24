@@ -23,12 +23,6 @@ In order to get all of the dependencies do the following:
 
  * puppet module install conzar-ckan
 
-Update to apache from github
-
- * delete apache puppet module in the puppet modules directory
- * download apache from git: `git clone git@github.com:Conzar/puppetlabs-apache.git`
- * rename puppetlabs-apache to apache
- 
 Other Requirements
 
  * Ubuntu Operating System.

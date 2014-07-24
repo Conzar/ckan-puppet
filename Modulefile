@@ -6,7 +6,6 @@ description 'Deploys CKAN the open source data portal.  This module provides cus
 project_page 'http://code.scenzgrid.org/index.php/p/puppet-vms/source/tree/master/modules/ckan'
 source 'git@github.com:Conzar/ckan-puppet.git'
 license 'GPLv3'
-dependency 'puppetlabs-apache', '>=1.1.1'
 dependency 'puppetlabs/postgresql', '>=3.2.0'
 dependency 'maestrodev/wget', '>=1.3.0'
 dependency 'puppetlabs/nodejs', '>=0.4.0'
