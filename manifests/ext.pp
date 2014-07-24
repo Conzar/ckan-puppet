@@ -1,6 +1,26 @@
+# == Type: ckan::ext
+#
+# A type which can be used to install a CKAN extension in the default location.
+#
+# === Parameters
+#
+# [*extname*]
+#   The name of the extension. Defaults to $title.
+#
+# [*provider*]
+#   The name of the VCS repository provider where the extension is hosted. Can
+#   be any provider supported by puppetlabs/vcsrepo. Defaults to 'git'.
+#
+# [*source*]
+#   The URL of the remote VCS repository. Defaults to
+#   "git://github.com/ckan/ckanext-$extname.git".
+#
+# [*revision*]
+#   The revision of the VCS repository to check out and install. Defaults to
+#   "stable".
+#
 define ckan::ext(
   $extname = undef,
-  $ensure = 'present',
   $provider = 'git',
   $source = undef,
   $revision = 'stable',
@@ -24,7 +44,7 @@ define ckan::ext(
   $extdir = "/usr/lib/ckan/default/src/ckanext-${_extname}"
 
   vcsrepo { $extdir:
-    ensure   => $ensure,
+    ensure   => 'present',
     provider => $provider,
     source   => $_source,
     revision => $revision,
