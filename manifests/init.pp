@@ -35,17 +35,15 @@
 # [*custom_imgs*] An array of source for the images to be used by the css.
 #                 Should be specified as
 #                 ['puppet:///<your module>/<img1>','...']
-# [*serveradmin*] The admin's email address used in the apache configuration.
 # [*recaptcha_publickey*] The public key for recaptcha (by default not set).
 # [*recaptcha_privatekey*] The private key for recaptcha (by default not set).
 # [*max_resource_size*] The maximum in megabytes a resource upload can be.
-# [*datapusher_formats*] File formats that will be pushed to the DataStore by the DataPusher.  
+# [*datapusher_formats*] File formats that will be pushed to the DataStore by the DataPusher.
 #                        When adding or editing a resource which links to a file in one of these formats, the DataPusher
 #                        will automatically try to import its contents to the DataStore.
-# [*preview_loadable*] Defines the resource formats which should be loaded directly in an iframe tag when previewing 
-#                      them if no Data Viewer can preview it. 
+# [*preview_loadable*] Defines the resource formats which should be loaded directly in an iframe tag when previewing
+#                      them if no Data Viewer can preview it.
 # [*text_formats*] Formats used for the text preview
-# [*apache_headers*] Sets the apache headers so to control search engine crawls and etc.
 # [*postgres_pass*] The password for the postgres user of the database (admin user).
 # [*pg_hba_conf_defaults*] True if use the default hbas and false to configure your own.
 #  This module uses postgresql so this setting informs the postgresql module
@@ -86,48 +84,30 @@ class ckan (
   $ckan_package_filename = '',
   $custom_css = 'main.css',
   $custom_imgs = '',
-  $do_reset_apt = true,
-  $serveradmin = 'webmaster@localhost',
   $recaptcha_publickey = '',
   $recaptcha_privatekey = '',
   $max_resource_size = 100,
   $datapusher_formats = 'csv xls application/csv application/vnd.ms-excel',
   $preview_loadable = 'html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv tsv rss txt json',
   $text_formats = '',
-  $apache_headers = '',
   $postgres_pass = pass,
   $pg_hba_conf_defaults = true,
 ){
   # Check supported operating systems
   if $osfamily != 'debian' {
-    fail("Unsupported OS $osfamily.  Please use a debian based system") 
+    fail("Unsupported OS $osfamily.  Please use a debian based system")
   }
-  
+
   File {
     owner => root,
     group => root,
   }
-  
-  # == Variables == #
+
   $ckan_package_dir = '/usr/local/ckan'
 
-  # == stages == #
-  stage {'first':
-    before => Stage['main'],
-  }
-
-  # == first == #
-  class { 'ckan::repos':
-    stage   => first,
-  }
-
-  # == main stage ==
-
-  class { 'ckan::install': }
-  class { 'ckan::db_config':
-    require => Class['ckan::install'],
-  }
-  class { 'ckan::config' :
+  anchor { 'ckan::begin': } ->
+  class { 'ckan::install': } ->
+  class { 'ckan::config':
     site_url         => $ckan::site_url,
     site_title       => $ckan::site_title,
     site_description => $ckan::site_description,
@@ -135,9 +115,15 @@ class ckan (
     site_about       => $ckan::site_about,
     site_logo        => $ckan::site_logo,
     plugins          => $ckan::plugins,
-    require          => Class['ckan::db_config'],
-  }
-  class { 'ckan::service' :
-    require => Class['ckan::config'],
-  }
+  } ->
+  class { 'ckan::db_config': }
+
+  class { 'ckan::service': } ->
+  class { 'ckan::postinstall': } ->
+  anchor { 'ckan::end': }
+
+  Anchor['ckan::begin']     ~> Class['ckan::service']
+  Class['ckan::install']    ~> Class['ckan::service']
+  Class['ckan::config']     ~> Class['ckan::service']
+  Class['ckan::db_config']  ~> Class['ckan::service']
 }
