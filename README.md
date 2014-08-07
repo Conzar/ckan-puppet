@@ -195,7 +195,7 @@ Declaring the ckan module with the customized parameters.
 	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
 	  site_logo             => $landcare_ckan::config::logo_src,
 	  license               => $landcare_ckan::config::license_src,
-	  is_ckan_from_repo     => 'false',
+	  is_ckan_from_repo     => false,
       ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
       ckan_package_filename => 'python-ckan_2.2_amd64.deb',
 	  custom_css            => $landcare_ckan::config::css_src,
