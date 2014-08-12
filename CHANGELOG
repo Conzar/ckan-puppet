@@ -1,3 +1,17 @@
+2014-08-13
+Version 1.0.5
+=============
+
+Summary:
+
+A CKAN Developer has cleaned up the module and prepared for ckan extensions.
+
+Features:
+ - Removed apache module dependency
+ - Removed module stage complexity with anchor pattern
+ - Removed hard coded security keys from production.ini.erb
+ - Added security keys to module parameters
+
 2014-07-23
 Version 1.0.4
 =============
