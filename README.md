@@ -60,6 +60,16 @@ Note,the following plugins have only been tested .
  * resource_proxy 
  * pdf_preview
 
+### `app_instance_id`
+The secret password for the app instance which is populated in the production.ini file.
+Use paster make-config to generate a config file that contains a new password.
+Note, there should be a better method of generating the secrets
+
+### `beaker_secret`
+The secret password for beaker which is populated in the production.ini file.
+Use paster make-config to generate a config file that contains a new password.
+Note, there should be a better method of generating the secrets
+
 ## Optional Parameters
 
 The parameters listed in this section can optionally be configured.
@@ -132,9 +142,6 @@ Formats used for the text preview
 
 Defaults to not being set in the configuration (since its an empty string)
 
-### `apache_headers` 
-Sets the apache headers so to control search engine crawls and etc.
-
 ### `postgres_pass` 
 The password for the postgres user of the database (admin user).
 
@@ -164,6 +171,8 @@ This example demonstrates the most basic usage of the ckan module.
 	  site_intro            => 'A CKAN test installation',
 	  site_about            => 'Pilot data catalogue and repository.',
 	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+      app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+      beaker_secret         => 'xxxxxxxxxxxx',
 	  is_ckan_from_repo     => 'false',
       ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
       ckan_package_filename => 'python-ckan_2.2_amd64.deb',
@@ -187,6 +196,8 @@ Declaring the ckan module with the customized parameters.
 	  site_intro            => 'Welcome to the Landcare Research Pilot Data Repository. This is a trial installation of the CKAN software, for us to test ahead of (all going well) a wider company rollout.',
 	  site_about            => 'Pilot data catalogue and repository for [Landcare Research] (http://www.landcareresearch.co.nz)',
 	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+      app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+      beaker_secret         => 'xxxxxxxxxxxx',
 	  site_logo             => $landcare_ckan::config::logo_src,
 	  license               => $landcare_ckan::config::license_src,
 	  is_ckan_from_repo     => false,
@@ -257,6 +268,8 @@ The file test-ckan.pp should be created in project_home/manifests/.
             site_intro            => 'A CKAN test installation',
             site_about            => 'Pilot data catalogue and repository.',
 	  		plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+            app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+            beaker_secret         => 'xxxxxxxxxxxx',
             is_ckan_from_repo     => false,
             ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
             ckan_package_filename => 'python-ckan_2.2_amd64.deb',
