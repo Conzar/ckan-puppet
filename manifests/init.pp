@@ -105,8 +105,13 @@ class ckan (
 
   $ckan_package_dir = '/usr/local/ckan'
 
-  anchor { 'ckan::begin': } ->
-  class { 'ckan::install': } ->
+  anchor { 'ckan::begin':
+    notify => Class['ckan::service'],
+  }
+  class { 'ckan::install':
+    notify  => Class['ckan::service'],
+    require => Anchor['ckan::begin'],
+  }
   class { 'ckan::config':
     site_url         => $ckan::site_url,
     site_title       => $ckan::site_title,
@@ -115,15 +120,19 @@ class ckan (
     site_about       => $ckan::site_about,
     site_logo        => $ckan::site_logo,
     plugins          => $ckan::plugins,
-  } ->
-  class { 'ckan::db_config': }
+    notify           => Class['ckan::service'],
+    require          => Class['ckan::install'],
+  }
+  class { 'ckan::db_config':
+    notify  => Class['ckan::service'],
+    require => Class['ckan::config'],
+  }
 
-  class { 'ckan::service': } ->
-  class { 'ckan::postinstall': } ->
-  anchor { 'ckan::end': }
-
-  Anchor['ckan::begin']     ~> Class['ckan::service']
-  Class['ckan::install']    ~> Class['ckan::service']
-  Class['ckan::config']     ~> Class['ckan::service']
-  Class['ckan::db_config']  ~> Class['ckan::service']
+  class { 'ckan::service': }
+  class { 'ckan::postinstall':
+    require => Class['ckan::service'],
+  }
+  anchor { 'ckan::end':
+    require => Class['ckan::postinstall'],
+  }
 }
