@@ -30,11 +30,11 @@ beaker.session.key = ckan
 # This is the secret token that the beaker library uses to hash the cookie sent
 # to the client. `paster make-config` generates a unique value for this each
 # time it generates a config file.
-beaker.session.secret = wkwqkxlXsn+KP3h9P7rKIUR+X
+beaker.session.secret = <%= scope.lookupvar('ckan::beaker_secret')  -%>
 
 # `paster make-config` generates a unique value for this each time it generates
 # a config file.
-app_instance_uuid = {557675a7-49a2-4fee-9629-66eeed52f1c6}
+app_instance_uuid = <%= scope.lookupvar('ckan::app_instance_id') -%>
 
 # repoze.who config
 who.config_file = %(here)s/who.ini

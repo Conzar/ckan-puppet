@@ -14,6 +14,10 @@
 # [*site_intro*] The introduction on the landing page.
 # [*site_about*] Information on the about page.
 # [*plugins*] Contains the ckan plugins to be used by the installation.
+# [*app_instance_id*] The secret password for the app instance .
+#                     Use paster make-config to generate a config file that contains a new password.
+# [*beaker_secret*] The secret password for beaker
+#                   Use paster make-config to generate a config file that contains a new password.
 # [*site_logo*] The source of the logo.  Should be spedified as
 #               puppet:///<your module>/<image>.png
 #               Note, should be a png file.
@@ -77,6 +81,8 @@ class ckan (
   $site_intro,
   $site_about,
   $plugins,
+  $app_instance_id,
+  $beaker_secret,
   $site_logo = '',
   $license = '',
   $is_ckan_from_repo = true,
