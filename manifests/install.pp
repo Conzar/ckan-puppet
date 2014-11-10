@@ -1,5 +1,8 @@
+# == Class ckan::install
+#
 # installs ckan
 # details: http://docs.ckan.org/en/ckan-2.0/install-from-package.html
+#
 class ckan::install {
 
   include wget
