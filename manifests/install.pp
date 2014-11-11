@@ -65,4 +65,9 @@ class ckan::install {
     require => [Package['nodejs'], Package['python-ckan']],
     creates => '/usr/lib/ckan/default/src/ckan/bin/less',
   }
+
+  # Git is necessary for installing extensions
+  package { 'git-core':
+    ensure => present,
+  }
 }

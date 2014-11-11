@@ -37,10 +37,21 @@ class ckan::config (
   file { [$ckan_etc, $ckan_default]:
     ensure  => directory,
   }
-  file {"$ckan_default/production.ini":
-    ensure  => file,
-    content => template('ckan/production.erb'),
-    require => File[$ckan_default],
+
+  concat { "$ckan_default/production.ini":
+     owner => root,
+     group => root,
+     mode  => '0644',
+  }
+  concat::fragment { "config_head":
+    target  => "$ckan_default/production.ini",
+    content => template('ckan/production_head.ini.erb'),
+    order   => 01,
+  }
+  concat::fragment { "config_tail":
+    target  => "$ckan_default/production.ini",
+    content => template('ckan/production_tail.ini.erb'),
+    order   => 99,
   }
 
   # add the logo but its set via the web ui and also set via production.ini
