@@ -1,54 +1,61 @@
-# installs the ckanext-spatial extension
+# == Class: ckan::ext::spatial
+#
+# Installs the "spatial" extension, which allows for the association of datasets
+# with geographic locations, and for searches across datasets to be restricted
+# to a particular geographical area. Additionally, it provides some support for
+# previewing geographical datasets.
+#
+# At a minimum, you should enable the "spatial_metadata" and "spatial_query"
+# plugins. See the plugin documentation for full details:
+#
+#   http://docs.ckan.org/projects/ckanext-spatial/en/latest/
+#
 class ckan::ext::spatial {
-  $sql_functions = '/usr/share/postgresql/9.1/contrib/postgis-2.0/postgis.sql'
-  $sql_tables = '/usr/share/postgresql/9.1/contrib/postgis-2.0/spatial_ref_sys.sql'
-  include apt
-    $packages = ['python-dev','libxml2-dev','libxslt1-dev',
-                'libgeos-c1', 'postgresql-9.1-postgis','git']
-  package {$packages:
-    ensure  => present,
-  }
-  #### huge note, need to check if functions exists
-  exec { 'create_gis_functions':
-    command => "/usr/bin/psql $sql_functions",
-    cwd     => '/var/lib/postgresql',
-    group   => 'postgres',
-    user    => 'postgres',
-    require => Package['postgresql-9.1-postgis'],
-    returns => [0,1,2],
-    #unless  => '/usr/bin/psql -l | /usr/bin/grep template_postgis | /usr/bin/wc -l'
-  }
-  exec { 'create_gis_tables':
-    command => "/usr/bin/psql $sql_tables",
-    cwd     => '/var/lib/postgresql',
-    group   => 'postgres',
-    user    => 'postgres',
-    require => Package['postgresql-9.1-postgis'],
-    returns => [0,1,2],
-    #unless  => '/usr/bin/psql -l | /usr/bin/grep template_postgis | /usr/bin/wc -l'
+
+  $ckanext_spatial_libs = [
+    'python-dev',
+    'libxml2-dev',
+    'libxslt1-dev',
+    'libgeos-c1',
+  ]
+
+  class { 'postgresql::server::postgis': }
+
+  package { $ckanext_spatial_libs:
+    ensure => present,
   }
 
-  exec { 'change_owner_tables':
-    command => "/usr/bin/psql -c 'ALTER TABLE spatial_ref_sys OWNER TO ckan_default; ALTER TABLE geometry_columns OWNER TO ckan_default'",
-    cwd     => '/var/lib/postgresql',
-    group   => 'postgres',
-    user    => 'postgres',
-    require => Exec['create_gis_functions','create_gis_tables'],
-    returns => [0,1,2],
-    #unless  => '/usr/bin/psql -l | /usr/bin/grep template_postgis | /usr/bin/wc -l'
+  ckan::ext { 'spatial':
+    require => [Class['postgresql::server::postgis'], Package[$ckanext_spatial_libs]],
   }
-  exec { 'test_setup':
-    command => '/usr/bin/psql -d ckan_default -c "SELECT postgis_full_version()"',
-    group   => 'postgres',
-    user    => 'postgres',
+
+  $sql_functions = '/usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql'
+  $sql_tables = '/usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql'
+
+  # Both of these SQL scripts are idempotent, so running them multiple times is
+  # just fine.
+  postgresql_psql { 'create postgis functions':
+    command => "\\i $sql_functions",
+    db      => 'ckan_default',
+    require => Class['postgresql::server::postgis'],
   }
-  exec { 'install_spatial' :
-    command => '/usr/bin/pip install -e git+https://github.com/okfn/ckanext-spatial.git@stable#egg=ckanext-spatial',
-    require => [Package['python-pip'],
-                Exec['test_setup']],
+
+  postgresql_psql { 'create spatial tables':
+    command => "\\i $sql_tables",
+    db      => 'ckan_default',
+    require => Class['postgresql::server::postgis'],
   }
-  exec { 'install_requirements' :
-    command => '/usr/bin/pip install -r pip-requirements.txt',
-    require => Exec['install_spatial'],
+
+  postgresql_psql { 'set spatial_ref_sys owner':
+    command => "ALTER TABLE spatial_ref_sys OWNER TO ckan_default",
+    db      => 'ckan_default',
+    require => Postgresql_psql['create spatial tables'],
   }
+
+  postgresql_psql { 'set geometry_columns owner':
+    command => "ALTER TABLE geometry_columns OWNER TO ckan_default",
+    db      => 'ckan_default',
+    require => Postgresql_psql['create spatial tables'],
+  }
+
 }
