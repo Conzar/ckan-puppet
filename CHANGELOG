@@ -1,3 +1,20 @@
+2014-11-12
+Version 1.0.6
+=============
+
+Summary:
+
+CKAN Developers have added a new submodule for managing CKAN extensions.
+
+Features:
+ - Added ckan::ext submodule
+ - Added Google Analytics extension
+ - Added Hierarchy extesion
+ - Added New Zealand Landcare extension
+ - Added Spatial extension
+ - Updated to using metadata.json
+
+
 2014-08-13
 Version 1.0.5
 =============

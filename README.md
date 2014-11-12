@@ -25,7 +25,9 @@ In order to get all of the dependencies do the following:
 
 Other Requirements
 
- * Ubuntu Operating System.
+ * Ubuntu 12.04 Operating System.
+ 
+ Note, Ubuntu 14.04 has been tested and currently doesn't install properly.
 
 ## Configuration
 
