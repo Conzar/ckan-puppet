@@ -29,6 +29,14 @@ class ckan::ext::spatial {
     require => [Class['postgresql::server::postgis'], Package[$ckanext_spatial_libs]],
   }
 
+  concat::fragment { 'ckanext-spatial':
+    target  => '/etc/ckan/default/production.ini',
+    content => "
+# Spatial Extension
+ckanext.spatial.search_backend = solr
+",
+  }
+
   $sql_functions = '/usr/share/postgresql/9.1/contrib/postgis-1.5/postgis.sql'
   $sql_tables = '/usr/share/postgresql/9.1/contrib/postgis-1.5/spatial_ref_sys.sql'
 

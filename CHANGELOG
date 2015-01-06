@@ -1,3 +1,16 @@
+2015-01-07
+Version 1.0.7
+=============
+
+Summary:
+Fixed a recent security exploit that has effected CKAN sites globally
+
+Fixes:
+ - Set the security settings to restrict anonymous users from creating groups and datasets
+ - Set the default backend for spatial search to solr in the spatial search extension
+ - Changed backups from weekly to daily
+
+
 2014-11-12
 Version 1.0.6
 =============

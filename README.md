@@ -7,7 +7,7 @@ Author: Michael Speth <spethm@landcareresearch.co.nz>
 This module installs, configures, and manages ckan.
 Customizations such as site logo, about page, license, and
 customized css are easily configurable from this module.  
-The ckan database is automatically backed up once a week to 
+The ckan database is automatically backed up every day to 
 /backup/ckan_database.pg_dump.
 
 
@@ -54,7 +54,7 @@ Information on the about page.
 
 ### `plugins`
 Contains the ckan plugins to be used by the installation.
-Note,the following plugins have only been tested .
+Note,the following plugins have only been tested.
 
  * stats 
  * text_preview recline_preview 

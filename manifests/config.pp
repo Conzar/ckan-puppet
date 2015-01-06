@@ -111,6 +111,6 @@ class ckan::config (
     user    => backup,
     minute  => '0',
     hour    => '5',
-    weekday => '7',
+    weekday => absent, # change to backup database every day at 5 am
   }
 }
