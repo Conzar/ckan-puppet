@@ -14,7 +14,7 @@ class ckan::repos {
     include wget
     wget::fetch { 'Download ckan package':
       source      => $ckan::ckan_package_url,
-      destination => "$ckan::ckan_package_dir/$ckan::ckan_package_filename",
+      destination => "${ckan::ckan_package_dir}/${ckan::ckan_package_filename}",
       timeout     => 0,
       verbose     => false,
       require     => File[$ckan::ckan_package_dir],

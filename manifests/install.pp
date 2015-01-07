@@ -14,9 +14,9 @@ class ckan::install {
 
   # Install Postgres
   class { 'postgresql::server':
-    pg_hba_conf_defaults => $ckan::pg_hba_conf_defaults,
-    postgres_password => $ckan::postgres_pass,
-    listen_addresses => '*',
+    pg_hba_conf_defaults  => $ckan::pg_hba_conf_defaults,
+    postgres_password     => $ckan::postgres_pass,
+    listen_addresses      => '*',
   }
 
   # Install CKAN deps
@@ -43,15 +43,15 @@ class ckan::install {
     }
     wget::fetch { 'ckan package':
       source      => $ckan::ckan_package_url,
-      destination => "$ckan::ckan_package_dir/$ckan::ckan_package_filename",
+      destination => "${ckan::ckan_package_dir}/${ckan::ckan_package_filename}",
       verbose     => false,
       require     => File[$ckan::ckan_package_dir],
     }
     package { 'python-ckan':
       ensure   => latest,
       provider => dpkg,
-      source   => "$ckan::ckan_package_dir/$ckan::ckan_package_filename",
-      require  => [Wget::Fetch["ckan package"], Package[$ckan_libs]],
+      source   => "${ckan::ckan_package_dir}/${ckan::ckan_package_filename}",
+      require  => [Wget::Fetch['ckan package'], Package[$ckan_libs]],
     }
   }
 

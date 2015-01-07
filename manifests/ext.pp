@@ -26,7 +26,9 @@ define ckan::ext(
   $revision = 'stable',
 ) {
   if ! defined(Class['ckan']) {
-    fail('You must include the ckan base class before using any ckan defined resources')
+    fail(
+  'You must include the ckan base class before using any ckan defined resources'
+    )
   }
 
   if $extname == undef {
@@ -54,7 +56,8 @@ define ckan::ext(
     refreshonly => true,
   } ~>
   exec { "install ckanext-${_extname} requirements":
-    command     => "/usr/lib/ckan/default/bin/pip install -r '${extdir}/pip-requirements.txt'",
+    command     =>
+    "/usr/lib/ckan/default/bin/pip install -r '${extdir}/pip-requirements.txt'",
     onlyif      => "/usr/bin/test -e '${extdir}/pip-requirements.txt'",
     refreshonly => true,
   }

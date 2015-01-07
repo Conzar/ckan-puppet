@@ -3,7 +3,7 @@
   "version": "1.0.7",
   "author": "landcareresearch",
   "summary": "Puppet module for deploying CKAN",
-  "license": "GPLv3",
+  "license": "GPL-3.0+",
   "source": "git@github.com:Conzar/ckan-puppet.git",
   "project_page": "https://github.com/Conzar/ckan-puppet",
   "issues_url": "https://github.com/Conzar/ckan-puppet/issues",

@@ -6,7 +6,7 @@
 define ckan::custom_images {
   $img_name_array = split($name,'/')
   $img_name = $img_name_array[-1]
-  file {"$ckan::config::ckan_img_dir/$img_name":
+  file {"${ckan::config::ckan_img_dir}/${img_name}":
     ensure => file,
     source => $name,
   }

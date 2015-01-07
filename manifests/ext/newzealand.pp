@@ -2,7 +2,7 @@
 #
 # Installs the "newzealand landcare" extension
 #
-# You should enable the "newzealand_landcare" plugin once the 
+# You should enable the "newzealand_landcare" plugin once the
 # extension is installed.
 #
 class ckan::ext::newzealand {

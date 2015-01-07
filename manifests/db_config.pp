@@ -44,5 +44,7 @@ class ckan::db_config {
 ### TODO db ckan_default should be OWNED by user ckan_default
 ### TODO db datastore_db should be OWNED by user ckan_default
 ### TODO MAYBE run this command to set the correct privs
-# python /usr/lib/ckan/default/src/ckan/ckanext/datastore/bin/datastore_setup.py ckan_default datastore_default ckan_default ckan_default datastore_default -p postgres
+# python /usr/lib/ckan/default/src/ckan/ckanext/datastore/bin/datastore_setup.py
+# ckan_default datastore_default ckan_default ckan_default datastore_default 
+# -p postgres
 }

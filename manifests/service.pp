@@ -1,4 +1,7 @@
-# manages services for ckan
+# == Class ckan::postinstall
+#
+# Manages services for ckan
+#
 # details: http://docs.ckan.org/en/ckan-2.0/install-from-package.html
 class ckan::service {
 
@@ -22,5 +25,4 @@ class ckan::service {
     hasrestart => true,
     require    => Service['apache2'],
   }
-
 }
