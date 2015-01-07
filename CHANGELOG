@@ -1,3 +1,14 @@
+2015-01-08
+Version 1.0.8
+=============
+
+Summary:
+Quality Control
+
+Fixes:
+ - Cleaned up the code based on puppet-lint (via puppetlinter.com)
+ - Enabled github hook for puppetlinter so future commits are checked and reported
+
 2015-01-07
 Version 1.0.7
 =============
