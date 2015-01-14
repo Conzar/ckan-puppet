@@ -1,13 +1,13 @@
-TODO --- update for next version
-2015-??-??
+2015-01-14
 Version 1.0.9
 =============
 
 Summary:
-...
+Added ckanapi support
 
-Fixes:
- - Moved to Travis CI for puppet-lint checking
+Features:
+ - The ckanapi can now be installed (optional)
+ - A helper script for calling ckanapi command line tool
 
 2015-01-08
 Version 1.0.8
