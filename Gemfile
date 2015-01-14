@@ -8,5 +8,5 @@ source ENV['GEM_SOURCE'] || "https://rubygems.org"
  
  gem 'rake'
  gem 'puppet-lint'
- #gem 'rspec-puppet'
- #gem 'puppet', puppetversion
+ gem 'rspec-puppet'
+ gem 'puppet', puppetversion
