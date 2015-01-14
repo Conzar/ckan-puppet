@@ -1,5 +1,34 @@
-# configuration supporting ckan
+# == Class: ckan::config
+#
+# Configuration supporting ckan
 # details: http://docs.ckan.org/en/ckan-2.0/install-from-package.html
+#
+# === Parameters
+#
+# [*ckan_etc*]
+#   The configuration directory.
+#
+# [*ckan_default*]
+#   The default directory in the ckan directory.
+#
+# [*ckan_src*]
+#   The ckan src directory.
+#
+# [*ckan_img_dir*]
+#   The directory to install images.
+#
+# [*ckan_css_dir*]
+#   The directory that contains the css files.
+#
+# [*ckan_storage_path*]
+#   The directory that contains the storage (ie downloads).
+#
+# [*license_file*]
+#   The name of the license file.
+#
+# [*backup_dir*]
+#   The location where backups are stored.
+#
 class ckan::config (
   $site_url           = 'localhost',
   $site_title         = 'localhost',
@@ -11,11 +40,9 @@ class ckan::config (
 ){
 
   # == variables ==
-  # the configuration directories
   $ckan_etc       = '/etc/ckan'
   $ckan_default   = "${ckan_etc}/default"
   $ckan_src       = '/usr/lib/ckan/default/src/ckan'
-  # the default image directory
   $ckan_img_dir   = "${ckan_src}/ckan/public/base/images"
   $ckan_css_dir   = "${ckan_src}/ckan/public/base/css"
   $ckan_storage_path = '/var/lib/ckan/default'
@@ -24,13 +51,13 @@ class ckan::config (
 
   # Jetty configuration
   file {'/etc/default/jetty':
-    ensure  => file,
-    source  => 'puppet:///modules/ckan/jetty',
+    ensure => file,
+    source => 'puppet:///modules/ckan/jetty',
   }
   # Change default schema to use CKAN schema
   file {'/etc/solr/conf/schema.xml':
-    ensure  => link,
-    target  => "${ckan_src}/ckan/config/solr/schema-2.0.xml",
+    ensure => link,
+    target => "${ckan_src}/ckan/config/solr/schema-2.0.xml",
   }
 
   # CKAN configuration

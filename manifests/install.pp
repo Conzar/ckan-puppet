@@ -14,9 +14,9 @@ class ckan::install {
 
   # Install Postgres
   class { 'postgresql::server':
-    pg_hba_conf_defaults  => $ckan::pg_hba_conf_defaults,
-    postgres_password     => $ckan::postgres_pass,
-    listen_addresses      => '*',
+    pg_hba_conf_defaults => $ckan::pg_hba_conf_defaults,
+    postgres_password    => $ckan::postgres_pass,
+    listen_addresses     => '*',
   }
 
   # Install CKAN deps
