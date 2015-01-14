@@ -101,6 +101,10 @@
 #   that the hba's should be handled outside of this module.
 #   Requires your own hba configuration.
 #
+# [*install_ckanapi*]
+#   Installs the ckan api if set to true.  Default is false.
+#   Additional information: https://github.com/ckan/ckanapi
+#
 # === Examples
 #
 #class { 'ckan':
@@ -150,6 +154,7 @@ class ckan (
   $text_formats           = '',
   $postgres_pass          = pass,
   $pg_hba_conf_defaults   = true,
+  $install_ckanapi        = false,
 ){
   # Check supported operating systems
   if $::osfamily != 'debian' {
@@ -189,6 +194,12 @@ class ckan (
   class { 'ckan::service': }
   class { 'ckan::postinstall':
     require => Class['ckan::service'],
+  }
+  if $install_ckanapi {
+    class {'ckan::ckanapi':
+      require => Class['ckan::postinstall'],
+      before  => Anchor['ckan::end'],
+    }
   }
   anchor { 'ckan::end':
     require => Class['ckan::postinstall'],
