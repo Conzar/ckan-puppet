@@ -4,7 +4,8 @@
 # Install Details: https://github.com/ckan/ckanapi
 #
 # Additional features:
-# * Database is backed up once a week to /backup/ckan_database.pg_dump.
+# * Installs a helper script in /usr/bin/ckan/ckanapi.bash
+#   which can be used to call ckanapi directly.
 #
 # === Parameters
 #
@@ -39,5 +40,11 @@ class ckan::ckanapi{
     cwd         => $extdir,
     refreshonly => true,
     subscribe   => Exec['install ckanapi requirements'],
+  }
+  file { '/usr/local/bin/ckanapi.bash':
+    ensure  => file,
+    source  => 'puppet:///modules/ckan/ckanapi.bash',
+    mode    => '0755',
+    require => Exec['install ckanapi'],
   }
 }

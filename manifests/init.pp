@@ -103,6 +103,8 @@
 #
 # [*install_ckanapi*]
 #   Installs the ckan api if set to true.  Default is false.
+#   Also installs a helper script in /usr/bin/ckan/ckanapi.bash which
+#   launches ckanapi with the environment setup.
 #   Additional information: https://github.com/ckan/ckanapi
 #
 # === Examples
