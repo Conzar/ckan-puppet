@@ -1,5 +1,5 @@
-source :rubygems
- 
+source ENV['GEM_SOURCE'] || "https://rubygems.org"
+
  if ENV.key?('PUPPET_VERSION')
    puppetversion = "= #{ENV['PUPPET_VERSION']}"
  else
