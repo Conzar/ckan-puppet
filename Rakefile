@@ -9,7 +9,6 @@ exclude_paths = [
 ]
 
 PuppetSyntax.exclude_paths = exclude_paths
-
 PuppetLint.configuration.fail_on_warnings
 PuppetLint.configuration.ignore_paths = exclude_paths
 PuppetLint.configuration.with_context = true
