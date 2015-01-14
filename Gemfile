@@ -10,3 +10,4 @@ source ENV['GEM_SOURCE'] || "https://rubygems.org"
  gem 'puppet-lint'
  gem 'rspec-puppet'
  gem 'puppet', puppetversion
+ gem 'puppet-syntax'
