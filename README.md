@@ -1,6 +1,6 @@
 # CKAN puppet module
 
-[![Build Status](https://travis-ci.org/Conzar/ckan-puppet?branch=master)](https://travis-ci.org/Conzar/ckan-puppet)
+[![Build Status](https://travis-ci.org/Conzar/ckan-puppet.svg?branch=master)](https://travis-ci.org/Conzar/ckan-puppet)
 
 Author: Michael Speth <spethm@landcareresearch.co.nz>
 
