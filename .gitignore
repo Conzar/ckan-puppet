@@ -2,3 +2,4 @@
 *.swo
 pkg
 tests
+Gemfile.lock
