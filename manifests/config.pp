@@ -4,6 +4,34 @@
 # details: http://docs.ckan.org/en/ckan-2.0/install-from-package.html
 #
 # === Parameters
+# [*site_url*]
+#   The site url of the ckan instance.  Defaults to localhost.
+#
+# [*site_title*]
+#   The title of the ckan instance.  Defaults to localhost.
+#
+# [*site_description*]
+#   This is for a description, or tag line for the site, as displayed in the
+#   header of the CKAN web interface.
+#
+# [*site_intro*]
+#   This is for an introductory text used in the default template's index page.
+#
+# [*site_about*]
+#   Multiline string can be used by indenting lines.  The format is in
+#   Markdown.
+#
+#   Its better to overload the snippet in home/snippets/about_text.html
+#   because if this parameter is set, this is not automatically translated.
+#
+# [*site_logo*]
+#   This sets the logo use din the title bar.
+#
+# [*plugins*]
+#   Specifies which CKAN plugins are to be enabled.
+#   Default: 'stats text_preview recline_preview'
+#
+# === Variables
 #
 # [*ckan_etc*]
 #   The configuration directory.
@@ -29,6 +57,12 @@
 # [*backup_dir*]
 #   The location where backups are stored.
 #
+# [*ckan_conf*]
+#   The default production ini file for ckan configuration.
+#
+# [*paster*]
+#   The full path to the paster command.
+#
 class ckan::config (
   $site_url           = 'localhost',
   $site_title         = 'localhost',
@@ -36,18 +70,20 @@ class ckan::config (
   $site_intro         = '',
   $site_about         = '',
   $site_logo          = '',
-  $plugins            = '',
+  $plugins            = 'stats text_preview recline_preview',
 ){
 
   # == variables ==
-  $ckan_etc       = '/etc/ckan'
-  $ckan_default   = "${ckan_etc}/default"
-  $ckan_src       = '/usr/lib/ckan/default/src/ckan'
-  $ckan_img_dir   = "${ckan_src}/ckan/public/base/images"
-  $ckan_css_dir   = "${ckan_src}/ckan/public/base/css"
+  $ckan_etc          = '/etc/ckan'
+  $ckan_default      = "${ckan_etc}/default"
+  $ckan_src          = '/usr/lib/ckan/default/src/ckan'
+  $ckan_img_dir      = "${ckan_src}/ckan/public/base/images"
+  $ckan_css_dir      = "${ckan_src}/ckan/public/base/css"
   $ckan_storage_path = '/var/lib/ckan/default'
-  $license_file   = 'license.json'
-  $backup_dir = '/backup'
+  $license_file      = 'license.json'
+  $backup_dir        = '/backup'
+  $ckan_conf         = "${ckan_default}/production.ini"
+  $paster            = '/usr/lib/ckan/bin/paster'
 
   # Jetty configuration
   file {'/etc/default/jetty':
@@ -65,18 +101,18 @@ class ckan::config (
     ensure  => directory,
   }
 
-  concat { "${ckan_default}/production.ini":
+  concat { $ckan_conf:
     owner => root,
     group => root,
     mode  => '0644',
   }
   concat::fragment { 'config_head':
-    target  => "${ckan_default}/production.ini",
+    target  => $ckan_conf,
     content => template('ckan/production_head.ini.erb'),
     order   => 01,
   }
   concat::fragment { 'config_tail':
-    target  => "${ckan_default}/production.ini",
+    target  => $ckan_conf,
     content => template('ckan/production_tail.ini.erb'),
     order   => 99,
   }
@@ -87,7 +123,7 @@ class ckan::config (
     file {"${ckan_img_dir}/site_logo.png":
       ensure  => file,
       source  => $site_logo,
-      require => File["${ckan_default}/production.ini"],
+      require => File[$ckan_conf],
     }
   }
   $ckan_data_dir = ['/var/lib/ckan',$ckan_storage_path]
@@ -139,5 +175,12 @@ class ckan::config (
     minute  => '0',
     hour    => '5',
     weekday => absent, # change to backup database every day at 5 am
+  }
+  # additional userful scripts
+  file { '/usr/local/bin/ckan_create_admin.bash':
+    ensure  => file,
+    source  => 'puppet:///modules/ckan/ckan_create_admin.bash',
+    mode    => '0755',
+    require => File['/usr/local/bin/ckan_backup.bash'],
   }
 }

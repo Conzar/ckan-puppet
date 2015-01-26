@@ -22,11 +22,16 @@
 # [*password*]
 #   Google Analytics password. Required.
 #
+# [*track_events*]
+#   Adds Google Analystics Event tracking.
+#   Default is false.
+#
 class ckan::ext::googleanalytics(
   $id       = undef,
   $account  = undef,
   $username = undef,
-  $password = undef
+  $password = undef,
+  $track_events = false
 ) {
 
   if $id == undef {
@@ -52,6 +57,17 @@ googleanalytics.id = ${id}
 googleanalytics.account = ${account}
 googleanalytics.username = ${username}
 googleanalytics.password = ${password}
+googleanalytics.track_events = ${track_events}
 ",
+  }
+  # setup cron job to push events
+  if $track_events {
+    # run the cron every hour
+    cron {'analystics_push_events':
+      command => "${ckan::config::paster} --plugin=ckan tracking update\
+ -c ${ckan::config::ckan_conf} && ${ckan::config::paster} --plugin=ckan\
+ search-index rebuild -r -c ${ckan::config::ckan_conf}",
+      hour    => '*/1',
+    }
   }
 }

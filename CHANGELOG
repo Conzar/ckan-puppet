@@ -1,3 +1,19 @@
+2015-01-??
+Version 1.0.10
+==============
+
+Summary:
+Minor Changes
+
+Features:
+ - Added an option to enable event tracking for the Google Analystics which pushes events every hour
+ - Added a convience script for creating admin accounts.
+
+Fixes:
+ - Cleaned up code
+ - Added documentation for ckan::config
+
+
 2015-01-14
 Version 1.0.9
 =============
