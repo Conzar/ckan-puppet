@@ -7,24 +7,24 @@ class ckan::db_config {
   # also create the user/password to access the db
   # user gets all privs by default
   postgresql::server::role {'ckan_default':
-    password_hash => 'pass',
+    password_hash => $ckan::ckan_pass,
   }
   postgresql::server::db {'ckan_default':
     user     => 'ckan_default',
     owner    => 'ckan_default',
-    password => 'pass',
+    password => $ckan::ckan_pass,
     require  => Postgresql::Server::Role ['ckan_default'],
   }
   # create a seperate db for the datastore extension
   postgresql::server::db { 'datastore_default' :
     user     => 'ckan_default',
     owner    => 'ckan_default',
-    password => 'pass',
+    password => $ckan::ckan_pass,
     require  => Postgresql::Server::Role ['ckan_default'],
   }
   # create a ro user for datastore extension
   postgresql::server::role { 'datastore_default' :
-    password_hash => 'pass',
+    password_hash => $ckan::ckan_pass,
   }
   # grant privs for datastore user
   postgresql::server::database_grant { 'datastore_default' :

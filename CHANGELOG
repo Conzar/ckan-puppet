@@ -1,4 +1,4 @@
-2015-01-??
+2015-01-28
 Version 1.0.10
 ==============
 
@@ -12,6 +12,8 @@ Features:
 Fixes:
  - Cleaned up code
  - Added documentation for ckan::config
+ - Added configuration for backup directory
+ - Added configuration for ckan database password
 
 
 2015-01-14

@@ -95,6 +95,9 @@
 # [*postgres_pass*]
 #   The password for the postgres user of the database (admin user).
 #
+# [*ckan_pass*]
+#   The password for the ckan user of the database.
+#
 # [*pg_hba_conf_defaults*]
 #   True if use the default hbas and false to configure your own.
 #   This module uses postgresql so this setting informs the postgresql module
@@ -154,7 +157,8 @@ class ckan (
     "html htm rdf+xml owl+xml xml n3 n-triples turtle plain atom csv\
  tsv rss txt json",
   $text_formats           = '',
-  $postgres_pass          = pass,
+  $postgres_pass          = 'pass',
+  $ckan_pass              = 'pass',
   $pg_hba_conf_defaults   = true,
   $install_ckanapi        = false,
 ){

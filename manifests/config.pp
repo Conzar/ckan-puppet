@@ -31,6 +31,10 @@
 #   Specifies which CKAN plugins are to be enabled.
 #   Default: 'stats text_preview recline_preview'
 #
+# [*backup_dir*]
+#   The location where backups are stored.
+#   Default: /backup
+#
 # === Variables
 #
 # [*ckan_etc*]
@@ -54,9 +58,6 @@
 # [*license_file*]
 #   The name of the license file.
 #
-# [*backup_dir*]
-#   The location where backups are stored.
-#
 # [*ckan_conf*]
 #   The default production ini file for ckan configuration.
 #
@@ -71,6 +72,7 @@ class ckan::config (
   $site_about         = '',
   $site_logo          = '',
   $plugins            = 'stats text_preview recline_preview',
+  $backup_dir         = '/backup',
 ){
 
   # == variables ==
@@ -81,7 +83,6 @@ class ckan::config (
   $ckan_css_dir      = "${ckan_src}/ckan/public/base/css"
   $ckan_storage_path = '/var/lib/ckan/default'
   $license_file      = 'license.json'
-  $backup_dir        = '/backup'
   $ckan_conf         = "${ckan_default}/production.ini"
   $paster            = '/usr/lib/ckan/bin/paster'
 
