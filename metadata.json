@@ -1,6 +1,6 @@
 {
   "name": "conzar-ckan",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "landcareresearch",
   "summary": "Puppet module for deploying CKAN",
   "license": "GPL-3.0+",
