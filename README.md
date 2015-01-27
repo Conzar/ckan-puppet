@@ -172,19 +172,19 @@ This section shows example uses of the ckan module.
 This example demonstrates the most basic usage of the ckan module.
 
 ```
-	class { 'ckan':
-	  site_url              => 'test.ckan.com',
-	  site_title            => 'CKAN Test',
-	  site_description      => 'A shared environment for managing Data.',
-	  site_intro            => 'A CKAN test installation',
-	  site_about            => 'Pilot data catalogue and repository.',
-	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-      app_instance_id       => '{xxxxxxxxxxxxxxxx}',
-      beaker_secret         => 'xxxxxxxxxxxx',
-	  is_ckan_from_repo     => 'false',
-      ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
-      ckan_package_filename => 'python-ckan_2.2_amd64.deb',
-	}
+class { 'ckan':
+  site_url              => 'test.ckan.com',
+  site_title            => 'CKAN Test',
+  site_description      => 'A shared environment for managing Data.',
+  site_intro            => 'A CKAN test installation',
+  site_about            => 'Pilot data catalogue and repository.',
+  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+  app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+  beaker_secret         => 'xxxxxxxxxxxx',
+  is_ckan_from_repo     => 'false',
+  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+  ckan_package_filename => 'python-ckan_2.2_amd64.deb',
+}
 ```
 
 ### Example 2
@@ -194,47 +194,46 @@ This example demonstrates a customize the ckan module.
 Declaring a class that manages the configuration files.
 
 ```
-	class {landcare_ckan::config:
-	}
+class {landcare_ckan::config: }
 ```
 
 Declaring the ckan module with the customized parameters.
 
 ```
-	class { 'ckan':
-	  site_url              => 'test.ckan.zen.landcareresearch.co.nz',
-	  site_title            => 'Landcare Research Test CKAN Repository',
-	  site_description      => 'A shared environment for managing Landcare Research Data.',
-	  site_intro            => 'Welcome to the Landcare Research Pilot Data Repository. This is a trial installation of the CKAN software, for us to test ahead of (all going well) a wider company rollout.',
-	  site_about            => 'Pilot data catalogue and repository for [Landcare Research] (http://www.landcareresearch.co.nz)',
-	  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-      app_instance_id       => '{xxxxxxxxxxxxxxxx}',
-      beaker_secret         => 'xxxxxxxxxxxx',
-	  site_logo             => $landcare_ckan::config::logo_src,
-	  license               => $landcare_ckan::config::license_src,
-	  is_ckan_from_repo     => false,
-      ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
-      ckan_package_filename => 'python-ckan_2.2_amd64.deb',
-	  custom_css            => $landcare_ckan::config::css_src,
-	  custom_imgs           => $landcare_ckan::config::custom_images_array,
-	  require               => Class['landcare_ckan::config'],
-	}
+class { 'ckan':
+  site_url              => 'test.ckan.zen.landcareresearch.co.nz',
+  site_title            => 'Landcare Research Test CKAN Repository',
+  site_description      => 'A shared environment for managing Landcare Research Data.',
+  site_intro            => 'Welcome to the Landcare Research Pilot Data Repository. This is a trial installation of the CKAN software, for us to test ahead of (all going well) a wider company rollout.',
+  site_about            => 'Pilot data catalogue and repository for [Landcare Research] (http://www.landcareresearch.co.nz)',
+  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+  app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+  beaker_secret         => 'xxxxxxxxxxxx',
+  site_logo             => $landcare_ckan::config::logo_src,
+  license               => $landcare_ckan::config::license_src,
+  is_ckan_from_repo     => false,
+  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+  ckan_package_filename => 'python-ckan_2.2_amd64.deb',
+  custom_css            => $landcare_ckan::config::css_src,
+  custom_imgs           => $landcare_ckan::config::custom_images_array,
+  require               => Class['landcare_ckan::config'],
+}
 ```
 
 Class where the customized configuration files are managed
 ```
-	class landcare_ckan::config {
-	  $img_dir 			   = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
-	  $landcare_src 	   = 'puppet:///modules/landcare_ckan'
-	  $css_src 			   = "$landcare_src/custom.css"
-	  $background_img_src  = "$landcare_src/LCR-ckan-homepage-background.jpg"
-	  $custom_images_array = [$background_img_src]
-	  $logo_filename 	   = 'lcr_logo_white_sm.png'
-	  $logo_src 		   = "$landcare_src/$logo_filename"
-	  $license  		   = 'NZ_licenses_ckan.json'
-	  $license_src 		   = "$landcare_src/$license"
-      $backup_dir          = '/backup',
-	}
+class landcare_ckan::config {
+  $img_dir 			   = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
+  $landcare_src 	   = 'puppet:///modules/landcare_ckan'
+  $css_src 			   = "$landcare_src/custom.css"
+  $background_img_src  = "$landcare_src/LCR-ckan-homepage-background.jpg"
+  $custom_images_array = [$background_img_src]
+  $logo_filename 	   = 'lcr_logo_white_sm.png'
+  $logo_src 		   = "$landcare_src/$logo_filename"
+  $license  		   = 'NZ_licenses_ckan.json'
+  $license_src 		   = "$landcare_src/$license"
+  $backup_dir          = '/backup',
+}
 ```
 
 ## Deploying with Vagrant
@@ -247,68 +246,71 @@ Note, make sure to edit puppet.module_path with a path to
 where the ckan module and the ckan module dependencies are located.
 
 ```
-        # -*- mode: ruby -*-
-        # vi: set ft=ruby :
-        Vagrant.configure("2") do |config|
-          config.vm.box = "precise64"
-          config.vm.box = "ubuntu/precise64"
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+Vagrant.configure("2") do |config|
+  config.vm.box = "precise64"
+  config.vm.box = "ubuntu/precise64"
 
-          config.vm.network "private_network", ip: "192.168.33.10"
-          config.vm.provider "virtualbox" do |v| 
-            v.memory = 2048
-            v.cpus = 1 
-          end 
+  config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.provider "virtualbox" do |v| 
+    v.memory = 2048
+    v.cpus = 1 
+  end 
 
-          config.vm.provision :shell, :path => "upgrade-puppet.sh"
+  config.vm.provision :shell, :path => "upgrade-puppet.sh"
 
-          config.vm.provision "puppet" do |puppet|
-            puppet.module_path = "</path to modules>/modules/"
-            puppet.manifests_path = "manifests"
-            puppet.manifest_file  = "test-ckan.pp"
-          end 
-        end
+  config.vm.provision "puppet" do |puppet|
+    puppet.module_path = "</path to modules>/modules/"
+    puppet.manifests_path = "manifests"
+    puppet.manifest_file  = "test-ckan.pp"
+  end 
+end
 ```
 
 ### test-ckan.pp
 This is the file that contains the declaration of the ckan module.
 The file test-ckan.pp should be created in project_home/manifests/.
 
-          class { 'ckan':
-            site_url              => 'http://192.168.33.10',
-            site_title            => 'CKAN Test',
-            site_description      => 'A shared environment for managing Data.',
-            site_intro            => 'A CKAN test installation',
-            site_about            => 'Pilot data catalogue and repository.',
-	  		plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
-            app_instance_id       => '{xxxxxxxxxxxxxxxx}',
-            beaker_secret         => 'xxxxxxxxxxxx',
-            is_ckan_from_repo     => false,
-            ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
-            ckan_package_filename => 'python-ckan_2.2_amd64.deb',
-            pg_hba_conf_defaults  => true,
-          }
+```
+class { 'ckan':
+  site_url              => 'http://192.168.33.10',
+  site_title            => 'CKAN Test',
+  site_description      => 'A shared environment for managing Data.',
+  site_intro            => 'A CKAN test installation',
+  site_about            => 'Pilot data catalogue and repository.',
+  plugins               => 'stats text_preview recline_preview datastore resource_proxy pdf_preview',
+  app_instance_id       => '{xxxxxxxxxxxxxxxx}',
+  beaker_secret         => 'xxxxxxxxxxxx',
+  is_ckan_from_repo     => false,
+  ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
+  ckan_package_filename => 'python-ckan_2.2_amd64.deb',
+  pg_hba_conf_defaults  => true,
+}
+```
 
 ### upgrade-puppet.sh
 This file manages installing the latest puppet from puppetlabs and updates apt-get
 The file upgrade-puppet.sh should be created in project_home/ (same directory as the Vagrantfile).
 
-        #!/bin/bash
+```
+#!/bin/bash
 
-        DISTRIB_CODENAME=$(lsb_release --codename --short)
-        DEB="puppetlabs-release-${DISTRIB_CODENAME}.deb"
-        DEB_PROVIDES="/etc/apt/sources.list.d/puppetlabs.list" # Assume that this file's existence means we have the Puppet Labs repo added
+DISTRIB_CODENAME=$(lsb_release --codename --short)
+DEB="puppetlabs-release-${DISTRIB_CODENAME}.deb"
+DEB_PROVIDES="/etc/apt/sources.list.d/puppetlabs.list" # Assume that this file's existence means we have the Puppet Labs repo added
 
-        if [ ! -e $DEB_PROVIDES ]
-        then
-            apt-get install --yes lsb-release
-            # Print statement useful for debugging, but automated runs of this will interpret any output as an error
-            # print "Could not find $DEB_PROVIDES - fetching and installing $DEB"
-            wget -q http://apt.puppetlabs.com/$DEB
-            sudo dpkg -i $DEB
-
-            sudo apt-get update
-            sudo apt-get install --yes puppet
-        fi
+if [ ! -e $DEB_PROVIDES ]
+then
+    apt-get install --yes lsb-release
+    # Print statement useful for debugging, but automated runs of this will interpret any output as an error
+    # print "Could not find $DEB_PROVIDES - fetching and installing $DEB"
+    wget -q http://apt.puppetlabs.com/$DEB
+    sudo dpkg -i $DEB
+    sudo apt-get update
+    sudo apt-get install --yes puppet
+fi
+```
 
 ### Usage
 In the project directory (vagrant directory),
