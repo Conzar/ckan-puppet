@@ -149,6 +149,9 @@ Defaults to not being set in the configuration (since its an empty string)
 ### `postgres_pass` 
 The password for the postgres user of the database (admin user).
 
+### `ckan_pass`
+The password for the ckan user of the database.
+
 ### `pg_hba_conf_defaults` 
 True if use the default hbas and false to configure your own.
 This module uses puppetlabs/postgresql so this setting informs the postgresql module
@@ -168,6 +171,7 @@ This section shows example uses of the ckan module.
 ### Example 1
 This example demonstrates the most basic usage of the ckan module.
 
+```
 	class { 'ckan':
 	  site_url              => 'test.ckan.com',
 	  site_title            => 'CKAN Test',
@@ -181,6 +185,7 @@ This example demonstrates the most basic usage of the ckan module.
       ckan_package_url      => 'http://packaging.ckan.org/python-ckan_2.2_amd64.deb',
       ckan_package_filename => 'python-ckan_2.2_amd64.deb',
 	}
+```
 
 ### Example 2
 This example demonstrates a customize the ckan module.
@@ -188,11 +193,14 @@ This example demonstrates a customize the ckan module.
 
 Declaring a class that manages the configuration files.
 
+```
 	class {landcare_ckan::config:
 	}
+```
 
 Declaring the ckan module with the customized parameters.
 
+```
 	class { 'ckan':
 	  site_url              => 'test.ckan.zen.landcareresearch.co.nz',
 	  site_title            => 'Landcare Research Test CKAN Repository',
@@ -211,25 +219,23 @@ Declaring the ckan module with the customized parameters.
 	  custom_imgs           => $landcare_ckan::config::custom_images_array,
 	  require               => Class['landcare_ckan::config'],
 	}
+```
 
 Class where the customized configuration files are managed
-
+```
 	class landcare_ckan::config {
-	  $img_dir = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
-
-	  $landcare_src = 'puppet:///modules/landcare_ckan'
-
-	  $css_src = "$landcare_src/custom.css"
-
-	  $background_img_src = "$landcare_src/LCR-ckan-homepage-background.jpg"
+	  $img_dir 			   = '/usr/lib/ckan/default/src/ckan/ckan/public/base/images'
+	  $landcare_src 	   = 'puppet:///modules/landcare_ckan'
+	  $css_src 			   = "$landcare_src/custom.css"
+	  $background_img_src  = "$landcare_src/LCR-ckan-homepage-background.jpg"
 	  $custom_images_array = [$background_img_src]
-
-	  $logo_filename = 'lcr_logo_white_sm.png'
-	  $logo_src = "$landcare_src/$logo_filename"
-
-	  $license = 'NZ_licenses_ckan.json'
-	  $license_src = "$landcare_src/$license"
+	  $logo_filename 	   = 'lcr_logo_white_sm.png'
+	  $logo_src 		   = "$landcare_src/$logo_filename"
+	  $license  		   = 'NZ_licenses_ckan.json'
+	  $license_src 		   = "$landcare_src/$license"
+      $backup_dir          = '/backup',
 	}
+```
 
 ## Deploying with Vagrant
 Vagrant can be used to easily deploy the ckan module for testing or production environments.
@@ -240,6 +246,7 @@ The following content should be copied to a clean Vagrantfile.
 Note, make sure to edit puppet.module_path with a path to
 where the ckan module and the ckan module dependencies are located.
 
+```
         # -*- mode: ruby -*-
         # vi: set ft=ruby :
         Vagrant.configure("2") do |config|
@@ -260,6 +267,7 @@ where the ckan module and the ckan module dependencies are located.
             puppet.manifest_file  = "test-ckan.pp"
           end 
         end
+```
 
 ### test-ckan.pp
 This is the file that contains the declaration of the ckan module.
