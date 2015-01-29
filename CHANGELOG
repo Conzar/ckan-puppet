@@ -7,6 +7,7 @@ Hot Fix
 
 Fixes:
  - Added ckan user password string to ckan.ini.
+ - Added puppetforge badge
 
 2015-01-28
 Version 1.0.10
