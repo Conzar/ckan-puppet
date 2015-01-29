@@ -1,5 +1,6 @@
 # CKAN puppet module
 
+[![Puppet Forge](http://img.shields.io/puppetforge/v/conzar/ckan-puppet.svg)](https://forge.puppetlabs.com/conzar/ckan-puppet)
 [![Build Status](https://travis-ci.org/Conzar/ckan-puppet.svg?branch=master)](https://travis-ci.org/Conzar/ckan-puppet)
 
 Author: Michael Speth <spethm@landcareresearch.co.nz>
