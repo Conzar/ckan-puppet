@@ -79,6 +79,7 @@ class ckan::install {
   file {'/opt/ckan_plugin_collector/plugin_collector.bash':
     ensure  => file,
     source  => 'puppet:///modules/ckan/plugin_collector.bash',
+    mode    => '0755',
     require => File['/opt/ckan_plugin_collector'],
   }
 }

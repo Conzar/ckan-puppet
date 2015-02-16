@@ -57,7 +57,11 @@ Information on the about page.
 
 ### `plugins`
 Contains the ckan plugins to be used by the installation.
-Note,the following plugins have only been tested.
+
+DO NOT set extension plugins here as this has changed as of patch 1.0.12.  All plugins for extensions are now handled in the ext modules.
+It will also take 2 puppet runs for a new extension to be realized (ie installed and operational).
+
+Note,the following plugins have been tested.
 
  * stats 
  * text_preview recline_preview 

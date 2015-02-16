@@ -1,3 +1,15 @@
+2015-02-16
+Version 1.0.12
+==============
+
+Summary:
+Ext Plugin Reworked
+
+Changes:
+ - Including extension plugins in the plugins parameter caused the module to fail due to a depedancy on the extension to already be installed prior to ckan started.
+   This patch incorperates the plugin into the extension so the extension plugins no longer need to be set via the plugin option.
+   It will require 2 puppet runs in order to bring the extensions online though (there isn't any way around this that I know of).
+ 
 2015-01-29
 Version 1.0.11
 ==============
