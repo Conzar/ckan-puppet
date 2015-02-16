@@ -70,4 +70,15 @@ class ckan::install {
   package { 'git-core':
     ensure => present,
   }
+
+  # setup the plugin collector 
+  file {'/opt/ckan_plugin_collector':
+    ensure => directory,
+  }
+
+  file {'/opt/ckan_plugin_collector/plugin_collector.bash':
+    ensure  => file,
+    source  => 'puppet:///modules/ckan/plugin_collector.bash',
+    require => File['/opt/ckan_plugin_collector'],
+  }
 }

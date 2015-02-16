@@ -55,6 +55,10 @@
 # [*ckan_storage_path*]
 #   The directory that contains the storage (ie downloads).
 #
+# [*ckan_plugin_dir*]
+#   The directory that contains files that builds the plugins entry in the
+#   production ini file
+#
 # [*license_file*]
 #   The name of the license file.
 #
@@ -82,6 +86,7 @@ class ckan::config (
   $ckan_img_dir      = "${ckan_src}/ckan/public/base/images"
   $ckan_css_dir      = "${ckan_src}/ckan/public/base/css"
   $ckan_storage_path = '/var/lib/ckan/default'
+  $ckan_plugin_dir   = "${ckan_etc}/plugins"
   $license_file      = 'license.json'
   $ckan_conf         = "${ckan_default}/production.ini"
   $paster            = '/usr/lib/ckan/bin/paster'
@@ -116,6 +121,17 @@ class ckan::config (
     target  => $ckan_conf,
     content => template('ckan/production_tail.ini.erb'),
     order   => 99,
+  }
+  
+  # write default plugins
+  file {"${ckan_etc}/plugins":
+    ensure  => directory,
+    require => File[$ckan_etc],
+  }
+  file {"${ckan_etc}/plugins/default":
+    ensure  => file,
+    content => inline_template("<%= scope.lookupvar('ckan::plugins') %>"),
+    require => File["${ckan_etc}/plugins"],
   }
 
   # add the logo but its set via the web ui and also set via production.ini

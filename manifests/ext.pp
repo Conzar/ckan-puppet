@@ -19,11 +19,16 @@
 #   The revision of the VCS repository to check out and install. Defaults to
 #   "stable".
 #
+# [*plugin*]
+#   A string space seperated list that contains any plugins to add to the
+#   plugin configuration in the production.ini.
+#
 define ckan::ext(
   $extname = undef,
   $provider = 'git',
   $source = undef,
   $revision = 'stable',
+  $plugin = undef,
 ) {
   if ! defined(Class['ckan']) {
     fail(
@@ -44,6 +49,14 @@ define ckan::ext(
   }
 
   $extdir = "/usr/lib/ckan/default/src/ckanext-${_extname}"
+
+  # check if the plugins need to be updated
+  if $plugin != undef {
+    file {"${ckan::config::ckan_plugin_dir}/${title}":
+      content => inline_template('<%= @plugin %>'),
+      before  => Vcsrepo[$extdir],
+    }
+  }
 
   vcsrepo { $extdir:
     ensure   => 'present',

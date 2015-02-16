@@ -5,8 +5,7 @@
 # to a particular geographical area. Additionally, it provides some support for
 # previewing geographical datasets.
 #
-# At a minimum, you should enable the "spatial_metadata" and "spatial_query"
-# plugins. See the plugin documentation for full details:
+# See the plugin documentation for full details:
 #
 #   http://docs.ckan.org/projects/ckanext-spatial/en/latest/
 #
@@ -26,6 +25,7 @@ class ckan::ext::spatial {
   }
 
   ckan::ext { 'spatial':
+    plugin  => 'spatial_metadata spatial_query',
     require => [ Class['postgresql::server::postgis'],
       Package[$ckanext_spatial_libs]
     ],

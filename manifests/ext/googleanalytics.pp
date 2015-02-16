@@ -47,7 +47,9 @@ class ckan::ext::googleanalytics(
     fail('The password parameter to ckan::ext::googleanalytics is required')
   }
 
-  ckan::ext { 'googleanalytics': }
+  ckan::ext { 'googleanalytics':
+    plugin => 'googleanalytics',
+  }
 
   concat::fragment { 'ckanext-googleanalytics':
     target  => '/etc/ckan/default/production.ini',

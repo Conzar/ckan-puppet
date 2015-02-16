@@ -82,7 +82,11 @@ ckan.simple_search = false
 #       Add ``pdf_preview`` to enable the resource preview for PDFs
 #		Add ``resource_proxy`` to enable resorce proxying and get around the
 #		same origin policy
+<% if scope.lookupvar('::ckan_production_plugins') %>
+ckan.plugins = <%= @ckan_production_plugins %>
+<% else %>
 ckan.plugins = <%= @plugins %>
+<% end %>
 
 ## Front-End Settings
 extra_public_paths = /var/local/ckan
