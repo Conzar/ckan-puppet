@@ -1,3 +1,13 @@
+2015-0?-??
+Version 1.0.13
+==============
+
+Summary:
+<TODO>
+
+Fixes:
+  - Output of new CKAN Fact now correctly reports if the /etc/ckan/plugins.out file doesn't exist.
+
 2015-02-16
 Version 1.0.12
 ==============
