@@ -2,6 +2,7 @@
 
 [![Puppet Forge](http://img.shields.io/puppetforge/v/conzar/ckan.svg)](https://forge.puppetlabs.com/conzar/ckan)
 [![Build Status](https://travis-ci.org/Conzar/ckan-puppet.svg?branch=master)](https://travis-ci.org/Conzar/ckan-puppet)
+[![Project Stats](https://www.openhub.net/p/ckan-puppet/widgets/project_thin_badge.gif)](https://www.openhub.net/p/ckan-puppet)
 
 Author: Michael Speth <spethm@landcareresearch.co.nz>
 
