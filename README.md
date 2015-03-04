@@ -1,7 +1,7 @@
 # CKAN puppet module
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/conzar/ckan.svg)](https://forge.puppetlabs.com/conzar/ckan)
-[![Build Status](https://travis-ci.org/Conzar/ckan-puppet.svg?branch=master)](https://travis-ci.org/Conzar/ckan-puppet)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/landcareresearch/ckan.svg)](https://forge.puppetlabs.com/landcaresearch/ckan)
+[![Bitbucket Build Status](http://build.landcareresearch.co.nz/app/rest/builds/buildType%3A%28id%3ALinuxAdmin_PuppetCkan_PuppetCkan%29/statusIcon)](http://build.landcareresearch.co.nz/viewType.html?buildTypeId=LinuxAdmin_PuppetCkan_PuppetCkan&guest=1)
 [![Project Stats](https://www.openhub.net/p/ckan-puppet/widgets/project_thin_badge.gif)](https://www.openhub.net/p/ckan-puppet)
 
 Author: Michael Speth <spethm@landcareresearch.co.nz>
@@ -329,19 +329,10 @@ notice: Finished catalog run in 648.91 seconds
 * Open a web browser and enter the following url
 http://192.168.33.10
 
-## License
+## Limitations
 
-GPL version 3
+Only works with debian based OS's.
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    any later version.
+## Development
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, [see](http://www.gnu.org/licenses/).
+The module is open source and available on github.  Please fork!
